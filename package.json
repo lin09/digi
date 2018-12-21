@@ -1,0 +1,27 @@
+{
+  "name": "dgi",
+  "version": "0.0.1-Beta",
+  "description": "test",
+  "main": "main.js",
+  "scripts": {
+    "start": "rollup --config rollup.config.js",
+    "dev": "rollup --watch --config rollup.config.dev.js",
+    "build": "rollup --config rollup.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digi1874/digi.git"
+  },
+  "keywords": [
+    "frame",
+    "js",
+    "javascript",
+    "digi"
+  ],
+  "author": "linzhenhui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digi1874/digi/issues"
+  },
+  "homepage": "https://github.com/digi1874/digi#readme"
+}
