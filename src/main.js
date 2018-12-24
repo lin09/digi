@@ -1,3 +1,4 @@
-export default () => {
-  console.log('this a test')
-}
+import digi from './main.prod'
+
+export * from './utils'
+export default digi
