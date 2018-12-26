@@ -4,6 +4,8 @@
 import path from 'path'
 import buble from 'rollup-plugin-buble'
 import { uglify } from "rollup-plugin-uglify"
+import { minify } from 'uglify-es'
+import filesize from 'rollup-plugin-filesize'
 import { rollupConfig, DICT } from './config/rollup.config'
 
 export default {
@@ -17,6 +19,7 @@ export default {
   plugins: [
     ...rollupConfig.plugins,
     buble(),
-    uglify()
+    uglify({}, minify),
+    filesize()
   ]
 }

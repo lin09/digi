@@ -1,34 +1,27 @@
-const objectType = {
-  stringTag: toString.call(''),
-  // arrayTag: toString.call([]),
-  // objectTag: toString.call({}),
-  // numberTag: toString.call(1),
-  // functionTag: toString.call(()=>{}),
-  // booleanTag: toString.call(true),
-  // undefineTag: toString.call(undefined),
-  // nullTag: toString.call(null),
-  // regExpTag: toString.call(new RegExp())
-}
+import { objectEach } from './base/objectEach'
+import tags from './base/objectTag'
 
-for (const key in objectType) {
+// 生成函数
+const fun = {}
+objectEach(tags, (tag, key) => {
   const newKey = 'is' + key[0].toUpperCase() + key.replace(/^.|Tag$/g, '')
-  objectType[newKey] = (value) => {
-    return toString.call(value) === objectType[key]
+  fun[newKey] = (value) => {
+    return toString.call(value) === tag
   }
-}
-
+  // function name
+  Object.defineProperty(fun[newKey], 'name', { value: newKey })
+})
 
 export const {
   /**
    * @module isString
    */
-
   /**
-   * Checks if value is classified as a String primitive or object.
+   * 检查值是否为字符串类型
    * @static
    * @function
-   * @param {any} value The value to check.
-   * @returns {boolean} Returns true if value is a string, else false.
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是字符串返回true, 否则返回false
    * @example
    * // npm
    * import { isString } from 'digi'
@@ -38,6 +31,31 @@ export const {
    *
    * isString('1')
    * // => true
+   * isString(1)
+   * // => false
    */
-  isString
-} = objectType
+  isString,
+
+  /**
+   * @module isObject
+   */
+  /**
+   * 检查值是否为对象类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是对象返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isObject } from 'digi'
+   *
+   * // cdn
+   * var isObject = digi.utils.isObject
+   *
+   * object({})
+   * // => true
+   * object([])
+   * // => false
+   */
+  isObject
+} = fun

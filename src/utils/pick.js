@@ -1,15 +1,15 @@
 import { isString } from './objectType'
 import { forEach } from './forEach'
+
 /**
  * @module pick
  */
-
 /**
- * Creates an object composed of the picked object properties.
+ * 选择对象中的一些属性组成新的对象
  * @function
- * @param {Object} object The source object.
- * @param {string|string[]} paths The property paths to pick.
- * @returns {Object} Returns the new object.
+ * @param {Object} object 源对象
+ * @param {string|string[]} paths 要选择的属性路径
+ * @returns {Object} 返回新的对象
  * @example
  * // npm
  * import { pick } from 'digi'
@@ -17,7 +17,11 @@ import { forEach } from './forEach'
  * // cdn
  * var pick = digi.utils.pick
  *
- * pick({ a: 1, b: 2, c: 3 }, ['a', 'b'])
+ * var obj = { a: 1, b: 2, c: 3 }
+ * pick(obj, 'a')
+ * // => { a: 1}
+ *
+ * pick(obj, ['a', 'b'])
  * // => { a: 1, b: 3 }
  */
 export const pick = (object, paths) => {
