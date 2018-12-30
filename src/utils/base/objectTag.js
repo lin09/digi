@@ -6,8 +6,8 @@ const tags = {
   stringTag: getTag(''),
   objectTag: getTag({}),
   arrayTag: getTag([]),
-  // numberTag: getTag(1),
-  // functionTag: getTag(()=>{}),
+  numberTag: getTag(1),
+  functionTag: getTag(()=>{}),
   // booleanTag: getTag(true),
   // undefineTag: getTag(undefined),
   // nullTag: getTag(null),
@@ -17,6 +17,8 @@ const tags = {
 export const {
   stringTag,
   objectTag,
-  arrayTag
+  arrayTag,
+  numberTag,
+  functionTag
 } = tags
 export default tags

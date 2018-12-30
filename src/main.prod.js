@@ -4,6 +4,6 @@ const digi = () => {
   console.log(123)
 }
 
-digi.utils = utils
+digi.$utils = utils
 
 export default digi

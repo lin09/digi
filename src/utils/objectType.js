@@ -27,7 +27,7 @@ export const {
    * import { isString } from 'digi'
    *
    * // cdn
-   * var isString = digi.utils.isString
+   * var isString = digi.$utils.isString
    *
    * isString('1')
    * // => true
@@ -50,12 +50,78 @@ export const {
    * import { isObject } from 'digi'
    *
    * // cdn
-   * var isObject = digi.utils.isObject
+   * var isObject = digi.$utils.isObject
    *
-   * object({})
+   * isObject({})
    * // => true
-   * object([])
+   * isObject([])
    * // => false
    */
-  isObject
+  isObject,
+
+  /**
+   * @module isFunction
+   */
+  /**
+   * 检查值是否为函数类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是函数返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isFunction } from 'digi'
+   *
+   * // cdn
+   * var isFunction = digi.$utils.isFunction
+   *
+   * isFunction(isFunction)
+   * // => true
+   */
+  isFunction,
+
+  /**
+   * @module isArray
+   */
+  /**
+   * 检查值是否为数组类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是数组返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isArray } from 'digi'
+   *
+   * // cdn
+   * var isArray = digi.$utils.isArray
+   *
+   * isArray([])
+   * // => true
+   */
+  isArray,
+
+  /**
+   * @module isNumber
+   */
+  /**
+   * 检查值是否为数字类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是数字返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isNumber } from 'digi'
+   *
+   * // cdn
+   * var isNumber = digi.$utils.isNumber
+   *
+   * isNumber(1)
+   * // => true
+   *
+   * isNumber('1')
+   * // => false
+   */
+  isNumber
 } = fun

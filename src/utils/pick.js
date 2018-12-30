@@ -15,7 +15,7 @@ import { forEach } from './forEach'
  * import { pick } from 'digi'
  *
  * // cdn
- * var pick = digi.utils.pick
+ * var pick = digi.$utils.pick
  *
  * var obj = { a: 1, b: 2, c: 3 }
  * pick(obj, 'a')
