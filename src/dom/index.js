@@ -1,8 +1,8 @@
-import { forEach, isObject, isString, cloneDeep } from '../utils'
+import { forEach, isObject, isString, cloneDeep, isUndefined } from '../utils'
 import { update } from './update'
 
 export const createElement = data => {
-  if (isString(data)) {
+  if (isString(data) || isUndefined(data)) {
     data = { tagName: data }
   }
 
