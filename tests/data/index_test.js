@@ -1,4 +1,4 @@
-export const dataTest = ({ createData, addWatch }) => {
+export const dataTest = ({ createData, addWatch, delWatch }) => {
   describe('测试data', () => {
     const sourceData = { a: 123, b: { c: 'abc' }, c: ['a'] }
 
@@ -16,6 +16,7 @@ export const dataTest = ({ createData, addWatch }) => {
       })
 
       it('获取模板', () => {
+        // 模板ID以1开始累加，{{[id].a}}
         expect(data.$tp('a')).toBe('{{[1].a}}')
       })
     })
@@ -89,6 +90,7 @@ export const dataTest = ({ createData, addWatch }) => {
         data.b = newDataB
         data.c = newDataC
 
+        // 添加时fun会被调用一次
         addWatch(data.$tp('a').replace(/{|}/g, ''), (newVal, oldVal) => {
           it('添加现有属性watch', () => {
             expect(oldVal).toBe(oldDataA)
@@ -107,6 +109,29 @@ export const dataTest = ({ createData, addWatch }) => {
             expect(newVal).toBe(newDataC[1])
           })
         })
+      })
+      it('删除watch', () => {
+        let isDel = true
+        const data = createData(sourceData)
+        const watchKey = data.$tp('a').replace(/{|}/g, '')
+        const watchFun = () => {
+          isDel = false
+        }
+
+        addWatch(watchKey, watchFun)
+        // 添加时watchFun调用一次
+        expect(isDel).toBe(false)
+
+        isDel = true
+        data.a += 666
+        // a值改变watchFun调用一次
+        expect(isDel).toBe(false)
+
+        delWatch(watchKey, watchFun)
+        isDel = true
+        data.a += 666
+        // watch已删除， a值改变不会调用watchFun
+        expect(isDel).toBe(true)
       })
     })
   })
