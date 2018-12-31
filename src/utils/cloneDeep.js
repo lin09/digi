@@ -1,10 +1,10 @@
 /**
  * 非全功能克隆，只针对 array 和 object 做了简单处理
  */
-import { arrayTag, objectTag, getTag } from './base/objectTag'
+import { arrayTag, objectTag, getToStringTag } from './base/toStringTag'
 
-export const cloneDeep = (value) => {
-  const tag = getTag(value)
+export const cloneDeep = value => {
+  const tag = getToStringTag(value)
 
   if (!(tag === arrayTag || tag === objectTag)) {
     return value

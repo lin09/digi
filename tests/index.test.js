@@ -1,4 +1,4 @@
 import tests from './all_test'
-import digi, * as utils from '../src/main'
+import digi, * as all from '../src/main'
 
-tests({ digi, utils })
+tests({ digi, all })

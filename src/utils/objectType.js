@@ -1,16 +1,18 @@
 import { objectEach } from './base/objectEach'
-import tags from './base/objectTag'
+import tosTags, { getToStringTag } from './base/toStringTag'
+import tofTags, { getTypeofTag } from './base/typeofTag'
+
 
 // 生成函数
 const fun = {}
-objectEach(tags, (tag, key) => {
+const addFun = (tag, key, getFun) => {
   const newKey = 'is' + key[0].toUpperCase() + key.replace(/^.|Tag$/g, '')
-  fun[newKey] = (value) => {
-    return toString.call(value) === tag
-  }
+  fun[newKey] = value => getFun(value) === tag
   // function name
   Object.defineProperty(fun[newKey], 'name', { value: newKey })
-})
+}
+objectEach(tosTags, (tag, key) => addFun(tag, key, getToStringTag))
+objectEach(tofTags, (tag, key) => addFun(tag, key, getTypeofTag))
 
 export const {
   /**
@@ -58,6 +60,29 @@ export const {
    * // => false
    */
   isObject,
+
+  /**
+   * @module isTofObject
+   */
+  /**
+   * typeof值是否为object
+   * @static
+   * @function
+   * @param {any} value 要typeof的值
+   * @returns {boolean} 是object返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isTofObject } from 'digi'
+   *
+   * // cdn
+   * var isTofObject = digi.$utils.isTofObject
+   *
+   * isTofObject({})
+   * // => true
+   * isTofObject([])
+   * // => false
+   */
+  isTofObject,
 
   /**
    * @module isFunction
@@ -123,5 +148,53 @@ export const {
    * isNumber('1')
    * // => false
    */
-  isNumber
+  isNumber,
+
+  /**
+   * @module isUndefined
+   */
+  /**
+   * 检查值是否为数字类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是数字返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isUndefined } from 'digi'
+   *
+   * // cdn
+   * var isUndefined = digi.$utils.isUndefined
+   *
+   * isUndefined(undefined)
+   * // => true
+   *
+   * isUndefined('undefined')
+   * // => false
+   */
+  isUndefined,
+
+  /**
+   * @module isNull
+   */
+  /**
+   * 检查值是否为数字类型
+   * @static
+   * @function
+   * @param {any} value 要检查的值
+   * @returns {boolean} 是数字返回true, 否则返回false
+   * @example
+   * // npm
+   * import { isNull } from 'digi'
+   *
+   * // cdn
+   * var isNull = digi.$utils.isNull
+   *
+   * isNull(undefined)
+   * // => true
+   *
+   * isNull('undefined')
+   * // => false
+   */
+  isNull
 } = fun

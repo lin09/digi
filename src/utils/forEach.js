@@ -1,4 +1,4 @@
-import { arrayTag, getTag } from './base/objectTag'
+import { arrayTag, getToStringTag } from './base/toStringTag'
 import { arrayEach } from './base/arrayEach'
 import { objectEach } from './base/objectEach'
 
@@ -27,11 +27,9 @@ import { objectEach } from './base/objectEach'
  *   return false   // 提前结束遍历
  * })
  * // => a, 1
-  */
+ */
 export const forEach = (data, callBack) => {
-  const tag = getTag(data)
-
-  if (tag === arrayTag) {
+  if (getToStringTag(data) === arrayTag) {
     arrayEach(data, callBack)
   } else {
     objectEach(data, callBack)

@@ -1,9 +1,13 @@
 import * as unitTests from './units'
+// import { createElementTest } from './dom'
+import { dataTest } from './data'
 
-export default ({ digi, utils }) => {
-  digi.utils.forEach(digi.utils, (fun, funName) => {
+export default ({ digi, all }) => {
+  digi.$utils.forEach(digi.$utils, (fun, funName) => {
     const testName = funName + 'Test'
-    unitTests[testName](fun)
-    utils[funName] && unitTests[testName](utils[funName])
+    // unitTests[testName](fun)
+    all[funName] && unitTests[testName] && unitTests[testName](all[funName])
   })
+  dataTest(all)
+  // createElementTest()
 }

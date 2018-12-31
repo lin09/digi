@@ -1,5 +1,5 @@
 export const forEachTest = (forEach) => {
-  test(`测试使用${forEach.name}遍历对象和数组`, () => {
+  it(`测试使用${forEach.name}遍历对象和数组`, () => {
     const obj = { a: 1, b: 2 }
     // 测试不遍历原型对象
     obj.__proto__.c = 3

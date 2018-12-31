@@ -31,7 +31,7 @@ export const pick = (object, paths) => {
 
   const newObj = {}
 
-  forEach(paths, (path) => {
+  forEach(paths, path => {
     if (object.hasOwnProperty(path)) {
       newObj[path] = object[path]
     }
