@@ -1,4 +1,4 @@
-import { forEach, isObject, isFunction, isString, isArray, cloneDeep, isNumber } from '../utils'
+import { forEach, isObject, isArray, cloneDeep, isNumber } from '../utils'
 
 const watchs = {}
 
@@ -9,9 +9,7 @@ const setProperty = (obj, key, data, state = {}, watchKey) => {
   Object.defineProperty(obj, key, {
     configurable: true,
     enumerable: true,
-    get: () => {
-      return state[key]
-    },
+    get: () => state[key],
     set: newVal => {
       let oldVal = state[key]
 
@@ -61,22 +59,21 @@ const setProperty = (obj, key, data, state = {}, watchKey) => {
   obj[key] = cloneDeep(data[key])
 }
 
-export const bindData = (data, { watch } = {}) => {
-  const index = bindData.index ? bindData.index + 1 : 1
-  bindData.index = index
-  forEach(watch, (fun, key) => {
-    watchs[`[${index}].${key}`] = [fun]
-  })
+export const createData = (data, { watch } = {}) => {
+  const index = createData.index ? createData.index + 1 : 1
+  createData.index = index
 
   const newData = {}
   forEach(data, (value, key) => {
     setProperty(newData, key, data, {}, `[${index}]`)
   })
 
+  forEach(watch, (fun, key) => {
+    watchs[`[${index}].${key}`] = [fun]
+  })
+
   Object.defineProperty(newData, '$tp', {
-    value: (path) => {
-      return `{{[${index}].${path}}}`
-    }
+    value: path => `{{[${index}].${path}}}`
   })
 
   return newData
