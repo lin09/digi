@@ -69,7 +69,7 @@ export const createData = (data, { watch } = {}) => {
   })
 
   forEach(watch, (fun, key) => {
-    watchs[`[${index}].${key}`] = [fun]
+    watchs[`[${index}].${key}`].push(fun)
   })
 
   Object.defineProperty(newData, '$tp', {
