@@ -21,4 +21,5 @@ export const {
   undefinedTag,
   nullTag
 } = tags
+
 export default tags

@@ -190,10 +190,10 @@ export const {
    * // cdn
    * var isNull = digi.$utils.isNull
    *
-   * isNull(undefined)
+   * isNull(null)
    * // => true
    *
-   * isNull('undefined')
+   * isNull('null')
    * // => false
    */
   isNull

@@ -2,7 +2,6 @@
  * 打包后的文件供浏览器使用
  */
 import path from 'path'
-import buble from 'rollup-plugin-buble'
 import { uglify } from "rollup-plugin-uglify"
 import { minify } from 'uglify-es'
 import filesize from 'rollup-plugin-filesize'
@@ -18,7 +17,6 @@ export default {
   },
   plugins: [
     ...rollupConfig.plugins,
-    buble(),
     uglify({}, minify),
     filesize()
   ]

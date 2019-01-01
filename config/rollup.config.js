@@ -1,4 +1,5 @@
 import path from 'path'
+import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import { eslint } from 'rollup-plugin-eslint'
@@ -19,6 +20,8 @@ export const rollupConfig = {
     name: DICT.OUTPUT_NAME
   },
   plugins: [
+    // babel 必需优先
+    babel(),
     eslint(),
     resolve(),
     commonjs()
