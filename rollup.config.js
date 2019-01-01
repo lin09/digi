@@ -27,7 +27,7 @@ const packageFile = 'package.json'
 const npmPackageFile = path.join(DICT.NPM_DIR, packageFile)
 jsonfile.readFile(packageFile)
   .then(data => {
-    data = pick(data, ['name', 'version', 'description', 'repository', 'keywords', 'author', 'license', 'bugs', 'homepage'])
+    data = pick(data, ['name', 'version', 'description', 'main', 'repository', 'keywords', 'author', 'license', 'bugs', 'homepage'])
     return jsonfile.writeFile(npmPackageFile, data, { spaces: 2 })
     .then(() => {
       successLog(`created ${ npmPackageFile }✔️`)

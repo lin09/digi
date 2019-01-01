@@ -1,6 +1,6 @@
 {
   "name": "digi",
-  "version": "0.0.1-Beta",
+  "version": "0.0.4-Beta",
   "description": "test",
   "main": "main.js",
   "scripts": {
