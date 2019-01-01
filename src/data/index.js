@@ -88,4 +88,4 @@ export const addWatch = (key, fun) => {
   fun(watchs[key].newVal, watchs[key].oldVal)
 }
 
-export const delWatch = (key, fun) => watchs[key].splice(watchs[key].indexOf(fun), 1)
+export const removeWatch = (key, fun) => watchs[key].splice(watchs[key].indexOf(fun), 1)

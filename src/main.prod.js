@@ -2,10 +2,12 @@ import * as utils from './utils'
 import * as dom from './dom'
 import * as data from './data'
 
-const digi = (data) => {
-  let digiElement = document.getElementById('digi')
-  digiElement = digiElement ? digiElement : document.body
-  digiElement.append(dom.createElement(data))
+const digi = (data, element) => {
+  let digiElement = element || document.getElementById('digi') || document.body
+
+  utils.isArray(data)
+    ? utils.forEach(data, (val) => digiElement.appendChild(dom.createElement(val)))
+    : digiElement.appendChild(dom.createElement(data))
 }
 
 digi.$utils = utils

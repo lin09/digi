@@ -1,4 +1,4 @@
-export const dataTest = ({ createData, addWatch, delWatch }) => {
+export const dataTest = ({ createData, addWatch, removeWatch }) => {
   describe('测试data', () => {
     const sourceData = { a: 123, b: { c: 'abc' }, c: ['a'] }
 
@@ -127,7 +127,7 @@ export const dataTest = ({ createData, addWatch, delWatch }) => {
         // a值改变watchFun调用一次
         expect(isDel).toBe(false)
 
-        delWatch(watchKey, watchFun)
+        removeWatch(watchKey, watchFun)
         isDel = true
         data.a += 666
         // watch已删除， a值改变不会调用watchFun

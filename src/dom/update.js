@@ -1,5 +1,5 @@
 import { forEach, isTofObject, isUndefined, isNull } from '../utils'
-import { addWatch } from '../data'
+import { addWatch, removeWatch } from '../data'
 // [ => \u005b , ] => \u005d
 const tpRE = /{{((\w|[-.\u005b\u005d])+)}}/g
 
@@ -33,10 +33,22 @@ export const update = (element, key, template) => {
     }
   } while (tp !== null)
 
+  const watchFuns = {}
+
   forEach(tpObj, (item, k) => {
-    addWatch(k, (val) => {
+    const fun = (val) => {
       item.val = val
       updated(element, key, template, tpObj)
-    })
+    }
+    watchFuns[k] = fun
+    addWatch(k, fun)
   })
+
+  if (JSON.stringify(tpObj) !== JSON.stringify({})) {
+    element.nativeRemove = element.remove
+    element.remove = () => {
+      forEach(watchFuns, (fun, k) => removeWatch(k, fun))
+      element.nativeRemove()
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { forEach, isObject, isString, cloneDeep, isUndefined } from '../utils'
+import { forEach, isObject, isString, cloneDeep, isUndefined, isArray } from '../utils'
 import { update } from './update'
 
 export const createElement = data => {
@@ -7,7 +7,7 @@ export const createElement = data => {
   }
 
   if (!isObject(data)) {
-    console.error('createElement Error: ', data)
+    window.console.error('createElement Error: ', data)
     return
   }
 
@@ -18,9 +18,14 @@ export const createElement = data => {
   forEach(data, (value, key) => {
     element[key] = value
 
-    if (isString(value)) {
+    if (key === 'child') {
+      if (isArray(value)) {
+        forEach(value, val => element.appendChild(createElement(val)))
+      } else {
+        element.appendChild(createElement(value))
+      }
+    } else if (isString(value)) {
       update(element, key, value)
-    } else if (key === 'children') {} else {
     }
   })
 

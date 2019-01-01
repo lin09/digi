@@ -3,6 +3,10 @@
     "ecmaVersion": 7,
     "sourceType": "module"
   },
+  "globals": {
+    "document": true,
+    "window": true
+  },
   "extends": "eslint:recommended",
   "rules": {
   }
