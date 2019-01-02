@@ -20,5 +20,5 @@ const addPlugin = (data, options) => {
 }
 
 export const addPlugins = (plugins) => {
-  forEach(plugins, item => addPlugins(item))
+  forEach(plugins, item => addPlugin(item))
 }
