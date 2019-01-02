@@ -1,4 +1,5 @@
 import { forEach, isObject, isString, cloneDeep, isUndefined, isArray } from '../utils'
+import { plugins } from '../plugin'
 import { update } from './update'
 
 export const createElement = data => {
@@ -16,17 +17,22 @@ export const createElement = data => {
   delete data.tagName
 
   forEach(data, (value, key) => {
-    element[key] = value
+    if (plugins[key]) {
+      plugins[key](element, value)
+    } else {
+      element[key] = value
 
-    if (key === 'child') {
-      if (isArray(value)) {
-        forEach(value, val => element.appendChild(createElement(val)))
-      } else {
-        element.appendChild(createElement(value))
+      if (key === 'child') {
+        if (isArray(value)) {
+          forEach(value, val => element.appendChild(createElement(val)))
+        } else {
+          element.appendChild(createElement(value))
+        }
+      } else if (isString(value)) {
+        update(element, key, value)
       }
-    } else if (isString(value)) {
-      update(element, key, value)
     }
+
   })
 
   return element

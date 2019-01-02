@@ -29,7 +29,7 @@ export const {
    * import { isString } from 'digi'
    *
    * // cdn
-   * var isString = digi.$utils.isString
+   * var isString = digi.utils.isString
    *
    * isString('1')
    * // => true
@@ -52,7 +52,7 @@ export const {
    * import { isObject } from 'digi'
    *
    * // cdn
-   * var isObject = digi.$utils.isObject
+   * var isObject = digi.utils.isObject
    *
    * isObject({})
    * // => true
@@ -75,7 +75,7 @@ export const {
    * import { isTofObject } from 'digi'
    *
    * // cdn
-   * var isTofObject = digi.$utils.isTofObject
+   * var isTofObject = digi.utils.isTofObject
    *
    * isTofObject({})
    * // => true
@@ -98,7 +98,7 @@ export const {
    * import { isFunction } from 'digi'
    *
    * // cdn
-   * var isFunction = digi.$utils.isFunction
+   * var isFunction = digi.utils.isFunction
    *
    * isFunction(isFunction)
    * // => true
@@ -119,7 +119,7 @@ export const {
    * import { isArray } from 'digi'
    *
    * // cdn
-   * var isArray = digi.$utils.isArray
+   * var isArray = digi.utils.isArray
    *
    * isArray([])
    * // => true
@@ -140,7 +140,7 @@ export const {
    * import { isNumber } from 'digi'
    *
    * // cdn
-   * var isNumber = digi.$utils.isNumber
+   * var isNumber = digi.utils.isNumber
    *
    * isNumber(1)
    * // => true
@@ -164,7 +164,7 @@ export const {
    * import { isUndefined } from 'digi'
    *
    * // cdn
-   * var isUndefined = digi.$utils.isUndefined
+   * var isUndefined = digi.utils.isUndefined
    *
    * isUndefined(undefined)
    * // => true
@@ -188,7 +188,7 @@ export const {
    * import { isNull } from 'digi'
    *
    * // cdn
-   * var isNull = digi.$utils.isNull
+   * var isNull = digi.utils.isNull
    *
    * isNull(null)
    * // => true

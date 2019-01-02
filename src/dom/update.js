@@ -45,10 +45,10 @@ export const update = (element, key, template) => {
   })
 
   if (JSON.stringify(tpObj) !== JSON.stringify({})) {
-    element.nativeRemove = element.remove
+    element.oldRemove = element.remove
     element.remove = () => {
       forEach(watchFuns, (fun, k) => removeWatch(k, fun))
-      element.nativeRemove()
+      element.oldRemove()
     }
   }
 }

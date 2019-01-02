@@ -15,7 +15,7 @@ import { objectEach } from './base/objectEach'
  * import { forEach } from 'digi'
  *
  * // cdn
- * var forEach = digi.$utils.forEach
+ * var forEach = digi.utils.forEach
  *
  * var obj = { a: 1, b: 2 }
  * forEach(obj, (value, key) => console.log(value, key))
