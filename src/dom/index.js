@@ -19,20 +19,24 @@ export const createElement = data => {
   forEach(data, (value, key) => {
     if (plugins[key]) {
       plugins[key](element, value)
-    } else {
-      element[key] = value
-
-      if (key === 'child') {
-        if (isArray(value)) {
-          forEach(value, val => element.appendChild(createElement(val)))
-        } else {
-          element.appendChild(createElement(value))
-        }
-      } else if (isString(value)) {
-        update(element, key, value)
+    }
+    else if (key === 'child') {
+      if (isArray(value)) {
+        forEach(value, val => element.appendChild(createElement(val)))
+      } else {
+        element.appendChild(createElement(value))
       }
     }
-
+    else if (isObject(value) || isObject(value)) {
+      forEach(value, (val, k) => {
+        element[key][k] = val
+      })
+      update(element, key, value)
+    }
+    else {
+      element[key] = value
+      isString(value) && update(element, key, value)
+    }
   })
 
   return element

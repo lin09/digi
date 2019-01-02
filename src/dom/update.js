@@ -1,4 +1,4 @@
-import { forEach, isTofObject, isUndefined, isNull } from '../utils'
+import { forEach, isTofObject, isUndefined, isNull, isObject, set } from '../utils'
 import { addWatch, removeWatch } from '../data'
 // [ => \u005b , ] => \u005d
 const tpRE = /{{((\w|[-.\u005b\u005d])+)}}/g
@@ -15,10 +15,15 @@ const updated = (element, key, template, tpObj) => {
 
     newVal = newVal.replace(item.RE, val)
   })
-  element[key] = newVal
+  set(element, key, newVal)
 }
 
 export const update = (element, key, template) => {
+  if (isObject(template)) {
+    forEach(template, (val, k) => update(element, key + '.' + k, val))
+    return
+  }
+
   const tpObj = {}
 
   let tp = ''
@@ -26,7 +31,6 @@ export const update = (element, key, template) => {
     tp = tpRE.exec(template)
     if (tp !== null) {
       tpObj[tp[1]] = {
-        key: tp[1],
         RE: RegExp(tp[0].replace(/(\u005b|\u005d|\.)/g, '\\$1'), 'g'),
         val: ''
       }
