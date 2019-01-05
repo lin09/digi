@@ -1,7 +1,7 @@
 import { isArray, forEach, isObject } from '../utils'
 
 /**
- * plugins.key = fun: key 名为element的属性名；fun(element, value)
+ * plugins.key = handler: key 名为element的属性名；handler(element, value)
  */
 export const plugins = {}
 
@@ -11,7 +11,7 @@ const addPlugin = (data, options) => {
   } else if (!isObject(data)) {
     window.console.error('plugins Error: ', data)
   } else {
-    plugins[data.propertiy] = data.fun
+    plugins[data.propertiy] = data.handler
     forEach(options, (option, key) => {
       data.options = data.options || {}
       data.options[key] = option

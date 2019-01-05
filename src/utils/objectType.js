@@ -5,9 +5,9 @@ import tofTags, { getTypeofTag } from './base/typeofTag'
 
 // 生成函数
 const fun = {}
-const addFun = (tag, key, getFun) => {
+const addFun = (tag, key, getTag) => {
   const newKey = 'is' + key[0].toUpperCase() + key.replace(/^.|Tag$/g, '')
-  fun[newKey] = value => getFun(value) === tag
+  fun[newKey] = value => getTag(value) === tag
   // function name
   Object.defineProperty(fun[newKey], 'name', { value: newKey })
 }
@@ -16,20 +16,13 @@ objectEach(tofTags, (tag, key) => addFun(tag, key, getTypeofTag))
 
 export const {
   /**
-   * @module isString
-   */
-  /**
    * 检查值是否为字符串类型
-   * @static
    * @function
+   * @tutorial isString
    * @param {any} value 要检查的值
    * @returns {boolean} 是字符串返回true, 否则返回false
    * @example
-   * // npm
    * import { isString } from 'digi'
-   *
-   * // cdn
-   * var isString = digi.utils.isString
    *
    * isString('1')
    * // => true
@@ -39,20 +32,12 @@ export const {
   isString,
 
   /**
-   * @module isObject
-   */
-  /**
    * 检查值是否为对象类型
-   * @static
    * @function
    * @param {any} value 要检查的值
    * @returns {boolean} 是对象返回true, 否则返回false
    * @example
-   * // npm
    * import { isObject } from 'digi'
-   *
-   * // cdn
-   * var isObject = digi.utils.isObject
    *
    * isObject({})
    * // => true
@@ -62,20 +47,12 @@ export const {
   isObject,
 
   /**
-   * @module isTofObject
-   */
-  /**
    * typeof值是否为object
-   * @static
    * @function
    * @param {any} value 要typeof的值
    * @returns {boolean} 是object返回true, 否则返回false
    * @example
-   * // npm
    * import { isTofObject } from 'digi'
-   *
-   * // cdn
-   * var isTofObject = digi.utils.isTofObject
    *
    * isTofObject({})
    * // => true
@@ -85,20 +62,12 @@ export const {
   isTofObject,
 
   /**
-   * @module isFunction
-   */
-  /**
    * 检查值是否为函数类型
-   * @static
    * @function
    * @param {any} value 要检查的值
    * @returns {boolean} 是函数返回true, 否则返回false
    * @example
-   * // npm
    * import { isFunction } from 'digi'
-   *
-   * // cdn
-   * var isFunction = digi.utils.isFunction
    *
    * isFunction(isFunction)
    * // => true
@@ -106,20 +75,12 @@ export const {
   isFunction,
 
   /**
-   * @module isArray
-   */
-  /**
    * 检查值是否为数组类型
-   * @static
    * @function
    * @param {any} value 要检查的值
    * @returns {boolean} 是数组返回true, 否则返回false
    * @example
-   * // npm
    * import { isArray } from 'digi'
-   *
-   * // cdn
-   * var isArray = digi.utils.isArray
    *
    * isArray([])
    * // => true
@@ -127,22 +88,17 @@ export const {
   isArray,
 
   /**
-   * @module isNumber
-   */
-  /**
    * 检查值是否为数字类型
-   * @static
    * @function
    * @param {any} value 要检查的值
    * @returns {boolean} 是数字返回true, 否则返回false
    * @example
-   * // npm
    * import { isNumber } from 'digi'
    *
-   * // cdn
-   * var isNumber = digi.utils.isNumber
-   *
    * isNumber(1)
+   * // => true
+   *
+   * isNumber(NaN)
    * // => true
    *
    * isNumber('1')
@@ -151,20 +107,12 @@ export const {
   isNumber,
 
   /**
-   * @module isUndefined
-   */
-  /**
-   * 检查值是否为数字类型
-   * @static
+   * 检查值是否为undefined
    * @function
    * @param {any} value 要检查的值
-   * @returns {boolean} 是数字返回true, 否则返回false
+   * @returns {boolean} 是undefined返回true, 否则返回false
    * @example
-   * // npm
    * import { isUndefined } from 'digi'
-   *
-   * // cdn
-   * var isUndefined = digi.utils.isUndefined
    *
    * isUndefined(undefined)
    * // => true
@@ -175,20 +123,12 @@ export const {
   isUndefined,
 
   /**
-   * @module isNull
-   */
-  /**
-   * 检查值是否为数字类型
-   * @static
+   * 检查值是否为null
    * @function
    * @param {any} value 要检查的值
-   * @returns {boolean} 是数字返回true, 否则返回false
+   * @returns {boolean} 是null返回true, 否则返回false
    * @example
-   * // npm
    * import { isNull } from 'digi'
-   *
-   * // cdn
-   * var isNull = digi.utils.isNull
    *
    * isNull(null)
    * // => true

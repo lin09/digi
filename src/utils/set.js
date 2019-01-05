@@ -1,13 +1,31 @@
-import { stringToPaths } from './base/stringToPaths'
+import { pathSplit } from './path'
 import { isString, isUndefined } from './objectType'
 import { forEach } from './forEach'
 
-export const set = (object, paths, value) => {
+/**
+ * 设置对象或数组属性值
+ * @function
+ * @param {Object|Array} data 将要被改变属性的数据源
+ * @param {String|String[]} paths 属性路径
+ * @param {Any} value 属性值
+ * @example
+ * import { set } from 'digi'
+ *
+ * const obj = {}
+ * set(obj, 'a.b.c', 123)
+ * console.log(obj)
+ * // => { a: { b: { c: 123 } } }
+ *
+ * set(obj, ['a', 'b', 'c'], 321)
+ * console.log(obj)
+ * // => { a: { b: { c: 321 } } }
+ */
+export const set = (data, paths, value) => {
   if (isString(paths)) {
-    paths = stringToPaths(paths)
+    paths = pathSplit(paths)
   }
 
-  let obj = object
+  let obj = data
   const lastPath = paths.pop()
   forEach(paths, path => {
     if (isUndefined(obj[path])) {
