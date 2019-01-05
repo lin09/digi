@@ -1,6 +1,6 @@
 import { forEach, isTofObject, isUndefined, isNull, isObject, set, pathJoin } from '../utils'
 import { addWatch, removeWatch, filters, removeFilter } from '../data'
-const tpRE = /{{([\s\S]+?)(?:\|([0-9]+))?}}/g
+const tpRE = /{{(([\s\S]+?)(?:\|([0-9]+))?)}}/g
 
 const updated = (element, key, template, tpObj) => {
   let newVal = template
@@ -43,7 +43,8 @@ export const update = (element, key, template) => {
       tpObj[tp[1]] = {
         RE: RegExp(tp[0].replace('|', '\\|'), 'g'),
         val: '',
-        filterId: tp[2]
+        path: tp[2],
+        filterId: tp[3]
       }
 
       tp[2] && filtersIds.push(tp[2])
@@ -52,13 +53,13 @@ export const update = (element, key, template) => {
 
   const watchFuns = {}
 
-  forEach(tpObj, (item, k) => {
+  forEach(tpObj, (item) => {
     const fun = (val) => {
       item.val = val
       updated(element, key, template, tpObj)
     }
-    watchFuns[k] = fun
-    addWatch(k, fun)
+    watchFuns[item.path] = fun
+    addWatch(item.path, fun)
   })
 
   if (JSON.stringify(tpObj) !== JSON.stringify({})) {
