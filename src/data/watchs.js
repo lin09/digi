@@ -3,15 +3,16 @@ import { forEach, cloneDeep } from '../utils'
 /**
  * 存储变化数据和调用方法
  * watchs.key = [handler1, ..., handlerN]; handler = (newVal, oldVal) { ... }
- * @static
+ * @private
  */
 const watchs = {}
 
 /**
  * 添加监听，添加时handler会被调用一次
+ * @private
  * @function
- * @param {string} path 生成渲染模板中的监听对象路径（{{监听对象路径|过滤器id}}）
- * @param {function|undefined} handler handler = (newVal, oldVal) { ... }; watchs[path]初始化时可为空
+ * @param {String}             path    - 生成渲染模板中的监听对象路径（{{监听对象路径|过滤器id}}）
+ * @param {Function|Undefined} handler - handler = (newVal, oldVal) { ... }; watchs[path]初始化时可为空
  */
 export const addWatch = (path, handler) => {
   if (!watchs[path]) {
@@ -22,7 +23,7 @@ export const addWatch = (path, handler) => {
     })
   }
 
-  if (handler) {
+  if (handler && watchs[path].indexOf(handler) === -1) {
     watchs[path].push(handler)
 
     // 添加时handler会被调用一次
@@ -32,14 +33,23 @@ export const addWatch = (path, handler) => {
 
 /**
  * 删除监听
+ * @private
  * @function
- * @param {string} path 添加监听时的path
- * @param {function} handler 添加监听时的handler
+ * @param {String}   path    - 添加监听{@link addWatch}时的path
+ * @param {Function} handler - 添加监听{@link addWatch}时的handler
  */
-export const removeWatch = (path, handler) => watchs[path].splice(watchs[path].indexOf(handler), 1)
+export const removeWatch = (path, handler) => {
+  const index = watchs[path].indexOf(handler)
+  index !== -1 && watchs[path].splice(index, 1)
+}
 
 /**
- * 触发
+ * 触发监听
+ * @private
+ * @function
+ * @param {String} path   - 添加监听{@link addWatch}时的path
+ * @param {Any}    newVal - 新值
+ * @param {Any}    oldVal - 旧值
  */
 export const triggerWatch = (path, newVal, oldVal) => {
   newVal = cloneDeep(newVal)

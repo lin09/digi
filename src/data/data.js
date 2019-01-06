@@ -4,11 +4,12 @@ import { createTemplates } from './template'
 
 /**
  * 设置对象defineProperty
- * @param {Object|Array} newData 产生新的数据
- * @param {String|Number} key 对象属性名
- * @param {Object|Array} data 源数据
- * @param {Object|Array} state 存储最新数据
- * @param {String} watchPath 所有父属性名连接
+ * @private
+ * @param {Object|Array}  newData   - 对象，是{@link createData}的返回可监听对象
+ * @param {String|Number} key       - 对象属性名
+ * @param {Object|Array}  data      - 源数据
+ * @param {Object|Array}  state     - 存储最新数据
+ * @param {String}        watchPath - 所有父属性名连接
  */
 const setProperty = (newData, key, data, state = {}, watchPath) => {
   watchPath = pathJoin(watchPath, key)
@@ -74,9 +75,35 @@ const setProperty = (newData, key, data, state = {}, watchPath) => {
 
 /**
  * 创建可监听对象
- * @param {Object} data 源对象
- * @param {Object} watch watch = { [ 源对象路径 ]: (newVal, oldVal) => {}, ... }
- * @returns {Object} 返回可监听对象
+ * @function
+ * @param {Object} data  - 源对象
+ * @param {Object} watch - watch = { path1: fun1, ..., pathN: funN }; path = 源对象路径; fun = (newVal, [oldVal]) => {};
+ * @returns {Object}     - 返回可监听对象
+ * @example
+ * import digi, { createData } from 'digi'
+ * import refs, { allotId } from 'digi-refs'
+ *
+ * // 创建监听数据
+ * const data = createData({ a: 123 }, { watch: {
+ *   a: (newVal, oldVal) => {
+ *     console.log(`watch a => newVal: ${ newVal }, oldVal: ${ oldVal }`)
+ *   }
+ * }})
+ *
+ * // 分配标记id
+ * const textRefId = allotId()
+ *
+ * // 添加元素
+ * digi({ ref: textRefId, innerText: data.$tp('a') })
+ *
+ * console.log(refs[textRefId].outerHTML)
+ * // => <div>123</div>
+ *
+ * data.a = 321
+ * // => watch a => newVal: 321, oldVal: 123
+ *
+ * console.log(refs[textRefId].outerHTML)
+ * // => <div>321</div>
  */
 export const createData = (data, { watch } = {}) => {
   // 记录惟一值
@@ -100,6 +127,7 @@ export const createData = (data, { watch } = {}) => {
 
 /**
  * 累计id
+ * @private
  * @property {Number} createData.id 最后一个id值
  */
 Object.defineProperty(createData, 'id', { value: 0, writable: true })

@@ -2,15 +2,16 @@ import { isArray, forEach } from '../utils'
 /**
  * 存储过滤器数据
  * filters[addFilter.id] = [filter1, ..., filterN]; filter = [handleFun, arg1, ..., arg2]
+ * @private
  */
 export const filters = {}
-window.filters = filters
 
 /**
  * 添加过滤器数据
+ * @private
  * @function
- * @param {Array} args args = [filter1, ..., filterN]; filter = [handleFun, arg1, ..., arg2] || handleFun
- * @returns {Number} 返回id值
+ * @param {Array} args - args = [filter1, ..., filterN]; filter = [handleFun, arg1, ..., arg2] || handleFun
+ * @returns {Number}   - 返回id值
  */
 export const addFilter = args => {
   const item = []
@@ -35,8 +36,22 @@ Object.defineProperty(addFilter, 'id', { value: 0, writable: true })
 
 /**
  * 删除过滤器
+ * @private
  * @function
- * @param {Number} id {@link addFilter}返回的id
- * @returns {Boolean} 删除成功返回true，否则false
+ * @param {Number} id - {@link addFilter}返回的id
+ * @returns {Array}   - 成功返回filters[id]，否则返回undefined
  */
-export const removeFilter = id => delete filters[id]
+export const removeFilter = id => {
+  const filter = filters[id]
+  delete filters[id]
+  return filter
+}
+
+/**
+ * 恢复过滤器
+ * @private
+ * @function
+ * @param {Number} id     - {@link removeFilter}删除过滤器的id
+ * @param {Array}  filter - {@link removeFilter}删除过滤器返回的数据
+ */
+export const restoreFilter = (id, filter) => filters[id] = filter

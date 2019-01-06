@@ -37,6 +37,15 @@ nav {
   margin-bottom: 100px;
 }
 
+.details {
+  margin-bottom: 5px;
+}
+
+.details + .name,
+.details + .subsection-title {
+  margin-top: 100px;
+}
+
 footer {
   text-align: center;
 }

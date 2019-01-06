@@ -10,7 +10,7 @@ const beforeAndAfterRE = /^\.|\.$/g
  * 数组和对象的路径都用“.”分隔。
  * 1、path.join('.')，2、中括号替换为点，3、多点替换为一个点，4、去掉前后点
  * @function
- * @param {[]string} paths 路径
+ * @param {string[]} paths - 路径
  * @returns {string} 新的路径
  */
 export const pathJoin = (...paths) => paths.join('.').replace(bracketRE, '.').replace(pointsRE, '.').replace(beforeAndAfterRE, '')

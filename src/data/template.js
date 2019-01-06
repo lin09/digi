@@ -2,9 +2,11 @@ import { addFilter } from './filters'
 
 /**
  * 生成渲染模板并存储过滤器
+ * @private
  * @function
- * @param {String} path 对象属性路径
- * @param  {...([Function,...String]|Function)} filters 过滤器 filters = [filter1, ..., filterN]; filter = fun || [fun, arg1, ..., argN]
+ * @param {String} path    - 对象属性路径
+ * @param {Array}  filters - 过滤器 filters = [filter1, ..., filterN]; filter = fun || [fun, arg1, ..., argN]
+ * @returns {String}       - 返回模板
  */
 export const createTemplates = (path, ...filters) => {
   if (filters.length === 0) {
