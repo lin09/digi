@@ -19,8 +19,8 @@ export const {
    * 检查值是否为字符串类型
    * @function
    * @tutorial isString
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是字符串返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是字符串返回true, 否则返回false
    * @example
    * import { isString } from 'digi'
    *
@@ -34,8 +34,8 @@ export const {
   /**
    * 检查值是否为对象类型
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是对象返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是对象返回true, 否则返回false
    * @example
    * import { isObject } from 'digi'
    *
@@ -49,23 +49,23 @@ export const {
   /**
    * typeof值是否为object
    * @function
-   * @param {any} value 要typeof的值
-   * @returns {boolean} 是object返回true, 否则返回false
+   * @param {Any} value - 要typeof的值
+   * @returns {Boolean} - 是object返回true, 否则返回false
    * @example
    * import { isTofObject } from 'digi'
    *
    * isTofObject({})
    * // => true
    * isTofObject([])
-   * // => false
+   * // => true
    */
   isTofObject,
 
   /**
    * 检查值是否为函数类型
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是函数返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是函数返回true, 否则返回false
    * @example
    * import { isFunction } from 'digi'
    *
@@ -77,8 +77,8 @@ export const {
   /**
    * 检查值是否为数组类型
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是数组返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是数组返回true, 否则返回false
    * @example
    * import { isArray } from 'digi'
    *
@@ -90,8 +90,8 @@ export const {
   /**
    * 检查值是否为数字类型
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是数字返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是数字返回true, 否则返回false
    * @example
    * import { isNumber } from 'digi'
    *
@@ -109,8 +109,8 @@ export const {
   /**
    * 检查值是否为undefined
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是undefined返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是undefined返回true, 否则返回false
    * @example
    * import { isUndefined } from 'digi'
    *
@@ -125,8 +125,8 @@ export const {
   /**
    * 检查值是否为null
    * @function
-   * @param {any} value 要检查的值
-   * @returns {boolean} 是null返回true, 否则返回false
+   * @param {Any} value - 要检查的值
+   * @returns {Boolean} - 是null返回true, 否则返回false
    * @example
    * import { isNull } from 'digi'
    *

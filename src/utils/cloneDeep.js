@@ -1,8 +1,21 @@
-/**
- * 非全功能克隆，只针对 array 和 object 做了简单处理
- */
 import { arrayTag, objectTag, getToStringTag } from './base/toStringTag'
 
+/**
+ * 克隆对象或数组
+ * @function
+ * @param {Array|Object} value - 源数据
+ * @returns {Array|Object}     - 返回新的数据
+ * @example
+ * import { cloneDeep } from 'digi'
+ *
+ * const obj = { a: 123 }
+ * const newObj = cloneDeep(obj)
+ *
+ * console.log(obj === newObj)
+ * // => false
+ * console.log(obj.a === newObj.a)
+ * // => true
+ */
 export const cloneDeep = value => {
   const tag = getToStringTag(value)
 

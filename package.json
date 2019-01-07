@@ -1,7 +1,7 @@
 {
   "name": "digi",
-  "version": "0.0.8-Beta",
-  "description": "test",
+  "version": "1.0.0-Beta",
+  "description": "一个简单的js框架",
   "main": "main.js",
   "scripts": {
     "start": "rollup --config rollup.config.js",

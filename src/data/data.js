@@ -73,11 +73,15 @@ const setProperty = (newData, key, data, state = {}, watchPath) => {
  * 创建可监听对象
  * @function
  * @param {Object} data  - 源对象
- * @param {Object} watch - watch = { path1: fun1, ..., pathN: funN }; path = 源对象路径; fun = (newVal, [oldVal]) => {};
+ * @param {Object} watch - watch = { path1: fun1, ..., pathN: funN };<br>
+ *                         path = 源对象路径; <br>
+ *                         fun = (newVal, [oldVal]) => {};
  * @returns {Object}     - 返回可监听对象
  * @example
  * import digi, { createData } from 'digi'
  * import refs, { allotId } from 'digi-refs'
+ *
+ * digi.plugins([refs])
  *
  * // 创建监听数据
  * const data = createData({ a: 123 }, { watch: {
@@ -90,7 +94,7 @@ const setProperty = (newData, key, data, state = {}, watchPath) => {
  * const textRefId = allotId()
  *
  * // 添加元素
- * digi({ ref: textRefId, innerText: data.$tp('a') })
+ * digi({ ref: textRefId, text: data.$tp('a') })
  *
  * console.log(refs[textRefId].outerHTML)
  * // => <div>123</div>

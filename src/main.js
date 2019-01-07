@@ -1,7 +1,7 @@
 import digi from './main.prod'
 
 export * from './utils'
-export * from './dom'
-export * from './data'
-export { addPlugins } from './plugin'
+export { createElement, createTextNode } from './dom'
+export { createData  } from './data'
+export { addPlugins as plugins } from './plugin'
 export default digi

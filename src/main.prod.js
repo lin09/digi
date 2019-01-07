@@ -1,12 +1,29 @@
 import * as utils from './utils'
 import { createElement, createTextNode } from './dom'
-import * as data from './data'
+import { createData  } from './data'
 import { addPlugins } from './plugin'
 
 /**
  * 把data转成元素添加为element的子元素
- * @param {array|object|string} data - data = tagName || { ...element } || [..., tagName, ..., { ...element }, ...]
- * @param {object|undefined} element - 元素，默认为#digi元素或document.body，把data转成元素添加为其子元素
+ * @param {Array|Object|String} data - data = tagName || { ...element } || [..., tagName, ..., { ...element }, ...]
+ * @param {Object|Undefined} element - 元素，默认为#digi元素或document.body，把data转成元素添加为其子元素
+ * @example
+ * import digi, { createData } from 'digi'
+ *
+ * // 创建监听数据
+ * const data = createData({ a: 123 })
+ *
+ * // 添加元素
+ * digi({ text: data.$tp('a') })
+ *
+ * console.log(document.body.lastChild.outerHTML)
+ * // => <div>123</div>
+ *
+ * data.a = 321
+ * // => watch a => newVal: 321, oldVal: 123
+ *
+ * console.log(document.body.lastChild.outerHTML)
+ * // => <div>321</div>
  */
 const digi = (data, element = digi.el) => {
   utils.isArray(data)
@@ -19,7 +36,7 @@ Object.defineProperties(digi, {
   createElement: { value: createElement },
   createTextNode: { value: createTextNode },
   utils: { value: utils },
-  data: { value: data },
+  createData: { value: createData },
   plugins: { value: addPlugins }
 })
 

@@ -4,9 +4,9 @@ import { forEach } from './forEach'
 /**
  * 选择对象中的一些属性组成新的对象
  * @function
- * @param {Object} object 源对象
- * @param {string|string[]} paths 要选择的属性路径
- * @returns {Object} 返回新的对象
+ * @param {Object} object      - 源对象
+ * @param {String|Array} paths - 要选择的属性路径
+ * @returns {Object}           - 返回新的对象
  * @example
  * import { pick } from 'digi'
  *

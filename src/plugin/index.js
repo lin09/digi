@@ -31,9 +31,29 @@ const addPlugin = (plugin, options) => {
 }
 
 /**
- * 添加多个插件
- * @private
+ * 添加插件
  * @function
- * @param {array} plugins - plugins = [plugin1, ..., pluginN]; plugin = plugin || [plugin, options]; 查看{@link addPlugin}
+ * @name plugins
+ * @param {Array} plugins - 值 = [plugin1, ..., pluginN]; <br>
+ *                          plugin = { propertiy: '元素属性名', handler: (元素, 元素属性值) => {} };<br>
+ *                          或 plugin = [{ propertiy: '元素属性名', handler: (元素, 元素属性值) => {} }, options]; options = {...}<br>
+ *                          handler在创建元素时抓捕到对应属性被触发, 并plugin.options = Object.assign(plugin.options, options)
+ * @example
+ * import digi, { plugins } from 'digi'
+ * import refs, { allotId } from 'digi-refs'
+ * console.log(refs)
+ * // {propertiy: "ref", handler: ƒ, allotId: ƒ}
+ *
+ * // 添加插件: plugins([refs]) 或 digi.plugins([refs])
+ * plugins([refs])
+ *
+ * // 分配标记id
+ * const textRefId = allotId()
+ *
+ * // 添加元素
+ * digi({ ref: textRefId, text: 'hello world' })
+ *
+ * console.log(refs[textRefId].outerHTML)
+ * // => <div>hello world</div>
  */
 export const addPlugins = plugins => forEach(plugins, item => addPlugin(item))
