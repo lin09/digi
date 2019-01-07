@@ -2,15 +2,18 @@ import { isArray, forEach, isObject } from '../utils'
 
 /**
  * 存储插件handlerFun
- * @property {string} [key] - key为element的属性名，plugins[key] = handler
+ * @private
+ * @property {string} [key] - key为元素属性名，plugins[key] = handler
  */
 export const plugins = {}
 
 /**
  * 添加单个插件
+ * @private
  * @function
- * @param {array|object} plugin  - plugin = { propertiy: 'element的属性名(可自定义名)', handler: fun }; plugin = plugin 或 [plugin, options]
- * @param {object}       options - 插件自定义配置
+ * @param {Array|Object} plugin      - plugin = { propertiy: '元素属性名', handler: (元素, 元素属性值) => {} };<br>
+ *                                     handler在创建元素时抓捕到对应属性被触发, 并plugin.options = Object.assign(plugin.options, options)
+ * @param {Object|Undefined} options - 插件自定义配置
  */
 const addPlugin = (plugin, options) => {
   if (isArray(plugin)) {
@@ -29,11 +32,8 @@ const addPlugin = (plugin, options) => {
 
 /**
  * 添加多个插件
+ * @private
  * @function
- * @param {array} plugins - plugins = [plugin1, ..., pluginN];
- *                        - plugin = { propertiy: 'element的属性名(可自定义名)', handler: fun }; plugin = plugin 或 [plugin, options]
- *                        - handler创建element抓捕到对应属性触发, 并plugin.options = Object.assign(plugin.options, options)
+ * @param {array} plugins - plugins = [plugin1, ..., pluginN]; plugin = plugin || [plugin, options]; 查看{@link addPlugin}
  */
-export const addPlugins = plugins => {
-  forEach(plugins, item => addPlugin(item))
-}
+export const addPlugins = plugins => forEach(plugins, item => addPlugin(item))

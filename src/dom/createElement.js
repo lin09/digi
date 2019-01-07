@@ -2,28 +2,8 @@ import { forEach, isObject, isString, cloneDeep, isUndefined, isArray } from '..
 import { plugins } from '../plugin'
 import { update } from '../data'
 import { createTextNode } from './createTextNode'
-
-/**
- * 处理移除元素
- * @private
- * @param {Object} element    - 元素
- */
-const handlerRemove = element => {
-  element.$removeWatch && element.$removeWatch()
-  element.$removeFilter && element.$removeFilter()
-  forEach(element.childNodes, e => handlerRemove(e))
-}
-
-/**
- * 处理恢复元素
- * @private
- * @param {Object} element   - 元素
- */
-const handlerRestore = element => {
-  element.$restoreFilter && element.$restoreFilter()
-  element.$addWatch && element.$addWatch()
-  forEach(element.childNodes, e => handlerRestore(e))
-}
+import { handlerRemove } from './handlerRemove'
+import { handlerRestore } from './handlerRestore'
 
 /**
  * 创建element
@@ -95,11 +75,7 @@ export const createElement = data => {
   }
 
   // 恢复元素
-  const oldUpdate = element.$update
-  element.$update = () => {
-    handlerRestore(element)
-    oldUpdate && oldUpdate()
-  }
+  element.$update = () => handlerRestore(element)
 
   return element
 }

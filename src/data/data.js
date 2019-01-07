@@ -42,9 +42,7 @@ const setProperty = (newData, key, data, state = {}, watchPath) => {
         }
         const newState = {}
         // 组装新属性，保留oldVal对应newVal的key值
-        forEach(newVal, (val, k) => {
-          newState[k] = oldVal[k]
-        })
+        forEach(newVal, (val, k) => newState[k] = oldVal[k] )
         // 设置新属性
         forEach(newVal, (val, k) => setProperty(newData[key], k, newVal, newState, watchPath))
       }
@@ -56,9 +54,7 @@ const setProperty = (newData, key, data, state = {}, watchPath) => {
           oldVal = []
         }
         const newState = []
-        forEach(newVal, (val, k) => {
-          newState[k] = oldVal[k]
-        })
+        forEach(newVal, (val, k) => newState[k] = oldVal[k])
         forEach(newVal, (val, k) => setProperty(newData[key], k, newVal, newState, watchPath))
       }
 

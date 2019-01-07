@@ -15,13 +15,7 @@ export const filters = {}
  */
 export const addFilter = args => {
   const item = []
-  forEach(args, filter => {
-    if (isArray(filter)) {
-      item.push(filter)
-    } else {
-      item.push([filter])
-    }
-  })
+  forEach(args, filter => isArray(filter) ? item.push(filter) : item.push([filter]))
 
   filters[++ addFilter.id] = item
 

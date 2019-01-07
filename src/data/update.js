@@ -1,4 +1,4 @@
-import { forEach, isTofObject, isUndefined, isNull, isObject, set, pathJoin, isArray } from '../utils'
+import { forEach, isTofObject, isUndefined, isNull, isObject, set, pathJoin, isArray, isEmpty } from '../utils'
 import { addWatch, removeWatch } from './watchs'
 import { filters, removeFilter, restoreFilter } from './filters'
 
@@ -56,20 +56,22 @@ const updated = (element, key, template, tpData) => {
  * @param {Object} tpData     - 模板匹配数据
  * @param {Array}  filtersIds - 过滤器id
  */
-const handlerWatch = (element, key, template, tpData, filtersIds) => {
+const handlerWatch = (element, key, template, tpData) => {
   // 存储监听方法，用于元素移除时清除监听方法
   const watchFuns = {}
+  // 存储过滤器id，用于元素移除时清除过滤器
+  const filtersIds = []
   // 存储移除时的过滤器，用于恢复
   const filters = {}
 
-  // 添加监听
+  // 存储监听方法
   forEach(tpData, (item, path) => {
-    const fun = val => {
+    watchFuns[path] = val => {
       item.val = val
       updated(element, key, template, tpData)
     }
-    watchFuns[path] = fun
-    addWatch(path, fun)
+
+    forEach(item.tp, tp => tp.filterId && filtersIds.push(tp.filterId))
   })
 
   // 移除监听
@@ -117,8 +119,6 @@ export const update = (element, key, value) => {
 
   // 模板数据，tpData = { val: 匹配模板最新值, tp: { [路径|id]: { RE: 匹配模板正则, filterId: 过滤器id }}};
   const tpData = {}
-  // 存储过滤器id，用于元素移除时清除过滤器
-  const filtersIds = []
 
   // 暂存匹配数据
   let tp = ''
@@ -134,15 +134,14 @@ export const update = (element, key, value) => {
       }
       if (!tpData[path].tp[key]) {
         // 模板转正则
-        const RE = RegExp(tp[0].replace('|', '\\|'), 'g')
-        const filterId = tp[3]
-        tpData[path].tp[key] = { RE, filterId }
-
-        filterId && filtersIds.push(filterId)
+        tpData[path].tp[key] = {
+          RE: RegExp(tp[0].replace('|', '\\|'), 'g'),
+          filterId: tp[3]
+        }
       }
     }
   } while (tp !== null)
 
   // 处理监听
-  JSON.stringify(tpData) !== JSON.stringify({}) &&  handlerWatch(element, key, value, tpData, filtersIds)
+  !isEmpty(tpData) &&  handlerWatch(element, key, value, tpData)
 }
