@@ -1,6 +1,6 @@
 ## 一个简单的 js 框架
-- [文档](https://digi1874.github.io/digi-doc/1.0.0-Beta/index.html)
 - [demo](https://github.com/lin09/digi-demo)
+- [refs](https://github.com/digi1874/digi-refs)
 
 ```
 // 简单例子
@@ -16,8 +16,6 @@ console.log(document.body.lastChild.outerHTML)
 // => <div>123</div>
 
 data.a = 321
-// => watch a => newVal: 321, oldVal: 123
-
 console.log(document.body.lastChild.outerHTML)
 // => <div>321</div>
 ```
