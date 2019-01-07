@@ -7,16 +7,15 @@ const pointsRE = /\.{2,}/g
 const beforeAndAfterRE = /^\.|\.$/g
 
 /**
- * 把数组路径转成字符串路径<br>
- * 数组和对象的路径都用“.”分隔: 1、path.join('.')，2、中括号替换为点，3、多点替换为一个点，4、去掉前后点
+ * 接连路径<br>
  * @function
- * @param {Array} paths - 数组路径
- * @returns {String}    - 字符串路径
+ * @param {Array} paths - 多个路径
+ * @returns {String}    - 返回连接成的新路径; 数组和对象的路径都用“.”分隔: 1、path.join('.')，2、中括号替换为点，3、多点替换为一个点，4、去掉前后点
  * @example
  * import { pathJoin } from 'digi'
  *
- * console.log(pathJoin(['a', 1]))
- * // => a.1
+ * console.log(pathJoin(a, '[1].b'))
+ * // => a.1.b
  */
 export const pathJoin = (...paths) => paths.join('.').replace(bracketRE, '.').replace(pointsRE, '.').replace(beforeAndAfterRE, '')
 

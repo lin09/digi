@@ -1,5 +1,5 @@
 export const cloneDeepTest = cloneDeep => {
-  it(`测试${cloneDeep.name}克隆对象`, () => {
+  it(`测试使用${cloneDeep.name}克隆对象`, () => {
     const obj = { a: 123, b: [1, 2] }
     const newObj = cloneDeep(obj)
     expect(newObj).not.toBe(obj)
