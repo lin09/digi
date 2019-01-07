@@ -18,7 +18,7 @@ const emptyObject = JSON.stringify({})
  * // => true
  */
 export const isEmpty = value => {
-  if (isArray(value) && isArray.length > 0) {
+  if (isArray(value) && value.length > 0) {
     return false
   } else if (isObject(value) && emptyObject !== JSON.stringify(value)) {
     return false
