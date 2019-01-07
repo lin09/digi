@@ -27,7 +27,7 @@ export const cloneDeep = value => {
 
   if (tag === objectTag) {
     rValue = { ...value }
-  } else if (tag === arrayTag) {
+  } else {
     rValue = [ ...value ]
   }
 
