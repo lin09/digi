@@ -1,1 +1,2 @@
-export * from './index_test'
+export * from './createElement_test'
+export * from './createTextNode_text'
