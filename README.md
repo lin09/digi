@@ -11,12 +11,12 @@
 - [demo](https://github.com/lin09/digi-demo)
 - [refs](https://github.com/digi1874/digi-refs)
 
------
-
+----
 #### 安装
 ```
 yarn add -D digi
 ```
+
 ----
 #### 简单例子
 ```
@@ -28,10 +28,10 @@ const data = createData({ a: 123 })
 // 添加元素
 digi({ text: data.$tp('a') })
 
-console.log(document.body.lastChild.outerHTML)
-// => <div>123</div>
+console.log(document.body.outerHTML)
+// => <body><div>123</div></body>
 
 data.a = 321
-console.log(document.body.lastChild.outerHTML)
-// => <div>321</div>
+console.log(document.body.outerHTML)
+// => <body><div>321</div></body>
 ```

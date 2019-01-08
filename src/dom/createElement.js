@@ -61,7 +61,7 @@ export const createElement = data => {
 
   if (!isObject(data)) {
     window.console.error('createElement Error: ', data)
-    // window.console.log('see link ...')
+    window.console.log('View document: https://digi1874.github.io/digi-doc/1.0.1/global.html#digi')
     return
   }
 
