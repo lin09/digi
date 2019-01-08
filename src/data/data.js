@@ -11,7 +11,7 @@ import { createTemplates } from './template'
  * @param {Object|Array}  state     - 存储最新数据
  * @param {String}        watchPath - 所有父属性名连接
  */
-const setProperty = (newData, key, data, state = {}, watchPath) => {
+const setProperty = (newData, key, data, state, watchPath) => {
   watchPath = pathJoin(watchPath, key)
   addWatch(watchPath)
 
@@ -115,7 +115,7 @@ export const createData = (data, { watch } = {}) => {
   forEach(data, (value, key) => setProperty(newData, key, data, {}, id))
 
   // 添加监听
-  forEach(watch, (handler, path) => addWatch(pathJoin(id, path), handler))
+  forEach(watch, (handler, path) => addWatch(pathJoin(id, path), handler, false))
 
   // 生成渲染模板
   Object.defineProperty(newData, '$tp', {

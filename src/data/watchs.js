@@ -14,7 +14,7 @@ const watchs = {}
  * @param {String}             path    - 生成渲染模板中的监听对象路径（{{监听对象路径|过滤器id}}）
  * @param {Function|Undefined} handler - handler = (newVal, oldVal) { ... }; watchs[path]初始化时可为空
  */
-export const addWatch = (path, handler) => {
+export const addWatch = (path, handler, isRun = true) => {
   if (!watchs[path]) {
     watchs[path] = []
     Object.defineProperties(watchs[path], {
@@ -27,7 +27,7 @@ export const addWatch = (path, handler) => {
     watchs[path].push(handler)
 
     // 添加时handler会被调用一次
-    handler(watchs[path].newVal, watchs[path].oldVal)
+    isRun && handler(watchs[path].newVal, watchs[path].oldVal)
   }
 }
 

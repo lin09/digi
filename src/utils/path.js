@@ -10,7 +10,7 @@ const beforeAndAfterRE = /^\.|\.$/g
  * 接连路径<br>
  * @function
  * @param {Array} paths - 多个路径
- * @returns {String}    - 返回连接成的新路径; 数组和对象的路径都用“.”分隔: 1、path.join('.')，2、中括号替换为点，3、多点替换为一个点，4、去掉前后点
+ * @returns {String}    - 返回连接成的新路径; 数组和对象的路径都用“.”分隔: 1、paths.join('.')，2、中括号替换为点，3、多点替换为一个点，4、去掉前后点
  * @example
  * import { pathJoin } from 'digi'
  *
