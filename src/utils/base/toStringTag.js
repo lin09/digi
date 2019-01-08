@@ -5,7 +5,7 @@ const tags = {
   objectTag: getToStringTag({}),
   arrayTag: getToStringTag([]),
   numberTag: getToStringTag(1),
-  functionTag: getToStringTag(()=>{}),
+  functionTag: getToStringTag(toString),
   // booleanTag: getToStringTag(true),
   undefinedTag: getToStringTag(undefined),
   nullTag: getToStringTag(null),

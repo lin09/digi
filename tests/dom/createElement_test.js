@@ -6,7 +6,7 @@ export const createElementTest = ({ createElement, createData }) => {
       expect(createElement({ tagName: 'test' }).localName).toBe('test')
     })
     it('测试错误数据创建DOM报错', () => {
-      expect(createElement([])).toBe(undefined)
+      expect(createElement(['测试错误数据创建DOM报错'])).toBe(undefined)
     })
     it('测试创建子元素', () => {
       expect(createElement({ child: 'a' }).outerHTML).toBe('<div><a></a></div>')
