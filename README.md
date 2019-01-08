@@ -2,9 +2,9 @@
 [![codecov](https://codecov.io/gh/digi1874/digi/branch/master/graph/badge.svg)](https://codecov.io/gh/digi1874/digi)
 [![npm](https://img.shields.io/npm/v/digi.svg)](https://www.npmjs.com/package/digi)
 [![license](https://img.shields.io/npm/l/digi.svg)](https://github.com/digi1874/digi/blob/master/LICENSE)
-![language](https://img.shields.io/badge/language-javascript-orange.svg)
-![platform](https://img.shields.io/badge/platform-nodejs-lightgrey.svg)
-![platform](https://img.shields.io/badge/platform-browser-lightgrey.svg)
+[![language](https://img.shields.io/badge/language-javascript-orange.svg)](https://developer.mozilla.org/bm/docs/Web/JavaScript)
+[![platform](https://img.shields.io/badge/platform-nodejs-lightgrey.svg)](https://nodejs.org)
+[![platform](https://img.shields.io/badge/platform-browser-lightgrey.svg)](https://baike.baidu.com/item/%E6%B5%8F%E8%A7%88%E5%99%A8/213911)
 
 
 ## 一个简单的 js 框架
