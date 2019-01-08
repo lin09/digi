@@ -11,7 +11,20 @@ export const addWatchTest = createData => {
     let newDataB = { c: '312', d: '123' }
     let newDataC = ['a1', 'c']
 
-    const data = createData(sourceData)
+    const data = createData(sourceData, {
+      watch: {
+        a: (newVal, oldVal) => {
+          it('createData 的 watch', () => {
+            expect(oldVal).toBe(oldDataA)
+            expect(newVal).toBe(newDataA)
+          })
+        }
+      }
+    })
+    data.a = newDataA
+    data.b = newDataB
+    data.c = newDataC
+    // 值不变不触发watch
     data.a = newDataA
     data.b = newDataB
     data.c = newDataC
@@ -39,25 +52,27 @@ export const addWatchTest = createData => {
 }
 
 export const removeWatchTest = createData => {
-  it('删除watch', () => {
-    let isDel = true
-    const data = createData(sourceData)
-    const watchKey = data.$tp('a').replace(/{|}/g, '')
-    const watchFun = () => isDel = false
+  describe('删除watch', () => {
+    it('删除watch', () => {
+      let isDel = true
+      const data = createData(sourceData)
+      const watchKey = data.$tp('a').replace(/{|}/g, '')
+      const watchFun = () => isDel = false
 
-    addWatch(watchKey, watchFun)
-    // 添加时watchFun调用一次
-    expect(isDel).toBe(false)
+      addWatch(watchKey, watchFun)
+      // 添加时watchFun调用一次
+      expect(isDel).toBe(false)
 
-    isDel = true
-    data.a += 666
-    // a值改变watchFun调用一次
-    expect(isDel).toBe(false)
+      isDel = true
+      data.a += 666
+      // a值改变watchFun调用一次
+      expect(isDel).toBe(false)
 
-    removeWatch(watchKey, watchFun)
-    isDel = true
-    data.a += 666
-    // watch已删除， a值改变不会调用watchFun
-    expect(isDel).toBe(true)
+      removeWatch(watchKey, watchFun)
+      isDel = true
+      data.a += 666
+      // watch已删除， a值改变不会调用watchFun
+      expect(isDel).toBe(true)
+    })
   })
 }

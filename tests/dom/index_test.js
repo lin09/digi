@@ -9,14 +9,14 @@ export const createElementTest = ({ createElement, createData, addWatch }) => {
       const data = createData({ a: 'test' })
       const textPart1 = 'testaaaa'
       const textPart2 = 'testbbbb'
-      const e = createElement({ innerText: textPart1 + data.$tp('a') + textPart2 + data.$tp('a') + textPart1 })
+      const e = createElement({ textContent: textPart1 + data.$tp('a') + textPart2 + data.$tp('a') + textPart1 })
 
       expect(data.a).toBe('test')
-      expect(e.innerText).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
+      expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
 
       data.a = 'tttttt'
       expect(data.a).toBe('tttttt')
-      expect(e.innerText).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
+      expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
     })
   })
 }

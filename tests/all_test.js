@@ -1,14 +1,25 @@
 import * as unitTests from './units'
+import { createDataTest, addWatchTest, removeWatchTest, filtersText, updateTest } from './data'
 // import { createElementTest } from './dom'
-// import { dataTest } from './data'
 
 export default ({ digi, all }) => {
-  digi.utils.forEach(digi.utils, (fun, funName) => {
-    const testName = funName + 'Test'
-    console.log(testName)
-    unitTests[testName](fun)
-    all[funName] && unitTests[testName](all[funName])
+  describe('测试utils', () => {
+    digi.utils.forEach(digi.utils, (fun, funName) => {
+      it('混入' + funName, () => expect(all[funName]).toBe(fun))
+
+      const testName = funName + 'Test'
+      // console.log(testName)
+      unitTests[testName](fun)
+    })
   })
-  // dataTest(all)
+
+  describe('测试data', () => {
+    it('混入' + digi.createData.name, () => expect(all.createData).toBe(digi.createData))
+    createDataTest(all.createData)
+    addWatchTest(all.createData)
+    removeWatchTest(all.createData)
+    filtersText(all)
+    updateTest(all)
+  })
   // createElementTest(all)
 }

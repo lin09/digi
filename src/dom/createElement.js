@@ -65,7 +65,7 @@ export const createElement = data => {
   delete data.tagName
 
   forEach(data, (value, key) => {
-    if (plugins[key]) {
+    if (plugins.hasOwnProperty(key)) {
       // 调用插件
       plugins[key](element, value)
     }
