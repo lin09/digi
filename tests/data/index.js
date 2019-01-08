@@ -1,1 +1,2 @@
-export * from './index_test'
+export * from './data_test'
+export * from './watch_test'
