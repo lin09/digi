@@ -4,7 +4,7 @@ import { isArray, forEach } from '../utils'
  * filters[addFilter.id] = [filter1, ..., filterN]; filter = [handleFun, arg1, ..., arg2]
  * @private
  */
-export const filters = {}
+const filters = {}
 
 /**
  * 添加过滤器数据
@@ -29,11 +29,18 @@ export const addFilter = args => {
 Object.defineProperty(addFilter, 'id', { value: 0, writable: true })
 
 /**
+ * 获取过滤器
+ * @param {Number} id - {@link addFilter}返回的id
+ * @returns {Array}   - 返回[[filter, arg1, ..., argN], ... ]
+ */
+export const getFilter = id => filters[id]
+
+/**
  * 删除过滤器
  * @private
  * @function
  * @param {Number} id - {@link addFilter}返回的id
- * @returns {Array}   - 成功返回filters[id]，否则返回undefined
+ * @returns {Array}   - 成功返回[[filter, arg1, ..., argN], ... ]，否则返回undefined
  */
 export const removeFilter = id => {
   const filter = filters[id]

@@ -1,6 +1,6 @@
 import { forEach, isTofObject, isUndefined, isNull, isObject, set, pathJoin, isArray, isEmpty } from '../utils'
 import { addWatch, removeWatch } from './watchs'
-import { filters, removeFilter, restoreFilter } from './filters'
+import { getFilter, removeFilter, restoreFilter } from './filters'
 
 // 匹配路径和过滤器id正则
 const tpRE = /{{(([\s\S]+?)(?:\|([0-9]+))?)}}/g
@@ -21,7 +21,7 @@ const updated = (element, key, template, tpData) => {
       let val = item.val
 
       if (tp.filterId) {
-        forEach(filters[tp.filterId], args => {
+        forEach(getFilter(tp.filterId), args => {
           // 数组第1个是过滤器，后面的是参数
           args = [ ...args ]
           const filter = args[0]
