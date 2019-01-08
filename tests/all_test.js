@@ -1,6 +1,7 @@
 import * as unitTests from './units'
 import { createDataTest, addWatchTest, removeWatchTest, filtersText, updateTest } from './data'
 import { createElementTest, createTextNode } from './dom'
+import { digiTest } from './digi_test'
 
 export default ({ digi, all }) => {
   describe('测试utils', () => {
@@ -28,4 +29,6 @@ export default ({ digi, all }) => {
     it('混入' + digi.createTextNode.name, () => expect(all.createTextNode).toBe(digi.createTextNode))
     createTextNode(all)
   })
+
+  digiTest(digi)
 }
