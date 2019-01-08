@@ -8,6 +8,7 @@ import { addPlugins } from './plugin'
  * @param {Array|Object|String} data - data = tagName || { ...element } || [..., tagName, ..., { ...element }, ...];<br>
  *                                     扩展元素属性：{ child: 子元素, text: 文本节点 }，<br>
  *                                     child = [data1, ..., dataN] 或 data <br>
+ *                                     子元素的属性名为 'child' 或 'child' + 数字 { child: 子元素, child0: 子元素, child1: 子元素, ... }; <br>
  *                                     文本节点的属性名为 'text' 或 'text' + 数字 { text: '内容', text0: '内容', text1: '内容', ... } <br>
  *                                     参数详情查看{@link createElement}
  * @param {Object|Undefined} element - 元素，默认为#digi元素或document.body，把data转成元素添加为其子元素

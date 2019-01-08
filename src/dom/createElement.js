@@ -5,12 +5,18 @@ import { createTextNode } from './createTextNode'
 import { handlerRemove } from './handlerRemove'
 import { handlerRestore } from './handlerRestore'
 
+// 匹配为文本节点的属性名
+const textKeyRE = /^text[0-9]*$/
+// 匹配为子元素的属性名
+const childKeyRE = /^child[0-9]*$/
+
 /**
  * 创建元素
  * @function
  * @param {String|Object|Undefined} data - data = tagName || { ...元素属性 };<br>
  *                                         扩展元素属性：{ child: 子元素, text: 文本节点 };<br>
  *                                         child = data 或 [data1, ..., dataN]; <br>
+ *                                         子元素的属性名为 'child' 或 'child' + 数字 { child: 子元素, child0: 子元素, child1: 子元素, ... }; <br>
  *                                         文本节点的属性名为 'text' 或 'text' + 数字 { text: '内容', text0: '内容', text1: '内容', ... }; <br>
  * @returns {Object}                     - 返回元素
  * @example
@@ -69,14 +75,14 @@ export const createElement = data => {
       // 调用插件
       plugins[key](element, value)
     }
-    else if (key === 'child') {
+    else if (childKeyRE.test(key)) {
       // 子元素
       if (isArray(value)) {
         forEach(value, val => element.appendChild(createElement(val)))
       } else {
         element.appendChild(createElement(value))
       }
-    } else if (/^text[0-9]*$/.test(key)) {
+    } else if (textKeyRE.test(key)) {
       // 文本
       element.appendChild(createTextNode(value))
     }
