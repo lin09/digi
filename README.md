@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/digi1874/digi.svg?branch=master)](https://travis-ci.org)
+[![codecov](https://codecov.io/gh/digi1874/digi/branch/master/graph/badge.svg)](https://codecov.io/gh/digi1874/digi)
+
 ## 一个简单的 js 框架
 - [demo](https://github.com/lin09/digi-demo)
 - [refs](https://github.com/digi1874/digi-refs)
