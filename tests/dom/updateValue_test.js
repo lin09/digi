@@ -5,6 +5,6 @@ export const updateValueTest = () => {
     expect(updateValue(123, '', '', 321)).toBe(321)
 
     let obj = { a: { b: 123 } }
-    expect(updateValue(obj, 'a', 'a.b', 321).a.b).toBe(321)
+    expect(updateValue(obj.a, 'a', 'a.b', 321).b).toBe(321)
   })
 }
