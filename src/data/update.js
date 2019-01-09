@@ -16,6 +16,7 @@ const tpRE = /{{(([\s\S]+?)(?:\|([0-9]+))?)}}/g
 const updated = (template, tpData, callBack) => {
   // 属性值
   let newVal = template
+
   forEach(tpData, item => {
     forEach(item.tp, tp => {
       let val = item.val
@@ -30,19 +31,20 @@ const updated = (template, tpData, callBack) => {
         })
       }
 
-      if (isTofObject(val)) {
-        // 转 typeOf ojbect 为字符串
-        val = JSON.stringify(val)
-      } else if (isUndefined(val) || isNull(val)) {
+      let valStr = val
+      if (isTofObject(valStr)) {
+        // 转 typeOf object 为字符串
+        valStr = JSON.stringify(valStr)
+      } else if (isUndefined(valStr) || isNull(valStr)) {
         // undefined 和 Null 转成空字符串
-        val = ''
+        valStr = ''
       }
 
       // 正则替换
-      newVal = newVal.replace(tp.RE, val)
+      newVal = newVal.replace(tp.RE, valStr)
 
-      if (newVal === val + '') {
-        newVal = item.val
+      if (newVal === valStr) {
+        newVal = val
       }
     })
   })
