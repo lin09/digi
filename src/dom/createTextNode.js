@@ -29,7 +29,7 @@ import { handlerRestore } from './handlerRestore'
  */
 export const createTextNode = text => {
   const textNode = document.createTextNode(text)
-  update(textNode, 'nodeValue', text)
+  update(textNode, 'nodeValue', text, newValue => textNode.nodeValue = newValue)
 
 
   // 移除文本节点

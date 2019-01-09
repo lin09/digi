@@ -31,9 +31,15 @@ import { addPlugins } from './plugin'
  * // => <div>321</div>
  */
 const digi = (data, element = digi.el) => {
-  utils.isArray(data)
-    ? utils.forEach(data, val => element.appendChild(createElement(val)))
-    : element.appendChild(createElement(data))
+  if (utils.isArray(data)) {
+    utils.forEach(data, val => {
+      const el = createElement(val)
+      el && element.appendChild(el)
+    })
+  } else {
+    const el = createElement(data)
+    el && element.appendChild(el)
+  }
 }
 
 Object.defineProperties(digi, {

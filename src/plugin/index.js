@@ -6,12 +6,14 @@ import { isArray, forEach, isObject } from '../utils'
  * @property {string} [key] - key为元素属性名，plugins[key] = handler
  */
 export const plugins = {}
+Object.defineProperty(plugins, 'hasRouter', { value: false, writable: true })
 
 /**
  * 添加单个插件
  * @private
  * @function
  * @param {Array|Object} plugin      - plugin = { property: '元素属性名', handler: (元素, 元素属性值) => {} };<br>
+ *                                     属性名不能用'hasRouter'；属性名'path'和'to'固定分配给路由插件
  *                                     handler在创建元素时抓捕到对应属性被触发, 并plugin.options = Object.assign(plugin.options, options)
  * @param {Object|Undefined} options - 插件自定义配置
  */
@@ -22,6 +24,11 @@ const addPlugin = (plugin, options) => {
     window.console.error('plugins Error: ', plugin)
     window.console.log('View document: https://digi1874.github.io/digi-doc/1.0.1/global.html#plugins')
   } else {
+    // 路由插件
+    if (plugin.property === 'path') {
+      plugins.hasRouter = true
+    }
+
     // 存储插件handlerFun
     plugins[plugin.property] = plugin.handler
 

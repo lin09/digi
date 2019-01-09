@@ -1,6 +1,7 @@
-import { forEach, isObject, isString, cloneDeep, isUndefined, isArray } from '../utils'
+import { forEach, isObject, isString, cloneDeep, isUndefined, isArray, set } from '../utils'
 import { plugins } from '../plugin'
 import { update } from '../data'
+import { updateValue } from './updateValue'
 import { createTextNode } from './createTextNode'
 import { handlerRemove } from './handlerRemove'
 import { handlerRestore } from './handlerRestore'
@@ -65,32 +66,50 @@ export const createElement = data => {
     return
   }
 
+  // // 路由插件，固定分配属性名'path'给路由插件
+  // if (data.hasOwnProperty('path') && plugins.hasRouter) {
+  //   return
+  // }
+
+  // // 有路由插件时将有'to'属性元素转成a标签元素
+  // if (data.hasOwnProperty('to') && plugins.hasRouter) {
+  //   data.tagName = 'a'
+  // }
+
   // 创建element，无tagName时默认为'div'
   const element = document.createElement(data.tagName || 'div')
   data = cloneDeep(data)
   delete data.tagName
 
   forEach(data, (value, key) => {
-    if (plugins.hasOwnProperty(key)) {
-      // 调用插件
-      plugins[key](element, value)
-    }
-    else if (childKeyRE.test(key)) {
+    if (childKeyRE.test(key)) {
       // 子元素
       if (isArray(value)) {
-        forEach(value, val => element.appendChild(createElement(val)))
+        forEach(value, val => {
+          const el = createElement(val)
+          el && element.appendChild(el)
+        })
       } else {
-        element.appendChild(createElement(value))
+        const el = createElement(value)
+        el && element.appendChild(el)
       }
     } else if (textKeyRE.test(key)) {
       // 文本
-      element.appendChild(createTextNode(value))
+      const text = createTextNode(value)
+      text && element.appendChild(text)
     }
     else {
-      update(element, key, value)
+      update(element, key, value, (newVal, path) => {
+        if (plugins.hasOwnProperty(key)) {
+          // 调用插件
+          value = updateValue(value, key, path, newVal)
+          plugins[key](element, value, path, newVal)
+        } else {
+          set(element, path, newVal)
+        }
+      })
     }
   })
-
 
   // 移除元素
   const remove = element.remove
