@@ -6,13 +6,13 @@ export const updateTest = ({ createElement, createData }) => {
       // 元素属性为对象测试
       dataset: {
         // 多个同样模板测试
-        a: data.$tp('a') + data.$tp('a')
+        a: data.$tp('a')
       },
       textContent: data.$tp('a') + data.$tp('b') + data.$tp('u'),
     })
 
     document.body.appendChild(e)
     e.remove()
-    expect(e.outerHTML).toBe('<div data-a="aa">a{"c":123}</div>')
+    expect(e.outerHTML).toBe('<div data-a="a">a{"c":123}</div>')
   })
 }

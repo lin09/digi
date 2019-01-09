@@ -3,14 +3,14 @@ export const pickTest = (pick) => {
     const obj = { a: '1', b: 2 }
     const expectObj = { a: '1' }
     // 选中多个属性用数组
-    const newOjb1 = pick(obj, ['a'])
+    const newObj1 = pick(obj, ['a'])
     // 1个属性可用字符串
-    const newOjb2 = pick(obj, 'a')
+    const newObj2 = pick(obj, 'a')
     // 能过滤不存在的属性
-    const newOjb3 = pick(obj, ['a', 'c'])
+    const newObj3 = pick(obj, ['a', 'c'])
 
-    expect(newOjb1).toEqual(expectObj)
-    expect(newOjb2).toEqual(expectObj)
-    expect(newOjb3).toEqual(expectObj)
+    expect(newObj1).toEqual(expectObj)
+    expect(newObj2).toEqual(expectObj)
+    expect(newObj3).toEqual(expectObj)
   })
 }
