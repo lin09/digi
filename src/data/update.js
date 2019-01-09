@@ -1,4 +1,4 @@
-import { forEach, isTofObject, isUndefined, isNull, isObject, set, pathJoin, isArray, isEmpty } from '../utils'
+import { forEach, isTofObject, isUndefined, isNull, isObject, pathJoin, isArray, isEmpty } from '../utils'
 import { addWatch, removeWatch } from './watchs'
 import { getFilter, removeFilter, restoreFilter } from './filters'
 
@@ -8,14 +8,15 @@ const tpRE = /{{(([\s\S]+?)(?:\|([0-9]+))?)}}/g
 /**
  * 正则渲染元素
  * @private
- * @param {Object} element  - 元素
- * @param {String} key      - 元素的属性路径
- * @param {String} template - 属性值模板
- * @param {Object} tpData   - 模板数据，tpData = { val: 匹配模板最新值, tp: { [路径|id]: { RE: 匹配模板正则, filterId: 过滤器id }, ... }};
+ * @param {Object} element    - 元素
+ * @param {String} template   - 属性值模板
+ * @param {Object} tpData     - 模板数据，tpData = { val: 匹配模板最新值, tp: { [路径|id]: { RE: 匹配模板正则, filterId: 过滤器id }, ... }};
+ * @param {Function} callBack - 回调渲染后的值，callBack(newVal)
  */
-const updated = (element, key, template, tpData) => {
+const updated = (template, tpData, callBack) => {
   // 属性值
   let newVal = template
+
   forEach(tpData, item => {
     forEach(item.tp, tp => {
       let val = item.val
@@ -30,33 +31,38 @@ const updated = (element, key, template, tpData) => {
         })
       }
 
-      if (isTofObject(val)) {
-        // 转 typeOf ojbect 为字符串
-        val = JSON.stringify(val)
-      } else if (isUndefined(val) || isNull(val)) {
+      let valStr = val
+      if (isTofObject(valStr)) {
+        // 转 typeOf object 为字符串
+        valStr = JSON.stringify(valStr)
+      } else if (isUndefined(valStr) || isNull(valStr)) {
         // undefined 和 Null 转成空字符串
-        val = ''
+        valStr = ''
       }
 
       // 正则替换
-      newVal = newVal.replace(tp.RE, val)
+      newVal = newVal.replace(tp.RE, valStr)
+
+      if (newVal === valStr) {
+        newVal = val
+      }
     })
   })
 
-  // 更新element属性
-  set(element, key, newVal)
+  // 回调值
+  callBack(newVal)
 }
 
 /**
  * 处理监听
  * @private
- * @param {Object} element    - 元素
- * @param {string} key        - 元素的属性名
- * @param {String} template   - 属性值模板
- * @param {Object} tpData     - 模板匹配数据
- * @param {Array}  filtersIds - 过滤器id
+ * @param {Object}   element  - 元素
+ * @param {string}   path     - 元素的属性名
+ * @param {String}   template - 属性值模板
+ * @param {Object}   tpData   - 模板匹配数据
+ * @param {Function} callBack - 回调渲染后的值和路径，callBack(newVal, path)
  */
-const handlerWatch = (element, key, template, tpData) => {
+const handlerWatch = (element, path, template, tpData, callBack) => {
   // 存储监听方法，用于元素移除时清除监听方法
   const watchFuns = {}
   // 存储过滤器id，用于元素移除时清除过滤器
@@ -64,26 +70,28 @@ const handlerWatch = (element, key, template, tpData) => {
   // 存储移除时的过滤器，用于恢复
   const filters = {}
 
-  // 存储监听方法
-  forEach(tpData, (item, path) => {
-    watchFuns[path] = val => {
+  forEach(tpData, (item, tpPath) => {
+    // 存储监听方法
+    watchFuns[tpPath] = val => {
       item.val = val
-      updated(element, key, template, tpData)
+      // 值变更，回调渲染后的值和路径
+      updated(template, tpData, newVal => callBack(newVal, path))
     }
 
+    // 存储过滤器
     forEach(item.tp, tp => tp.filterId && filtersIds.push(tp.filterId))
   })
 
   // 移除监听
   const $removeWatch = element.$removeWatch
   element.$removeWatch = () => {
-    forEach(watchFuns, (fun, path) => removeWatch(path, fun))
+    forEach(watchFuns, (fun, tpPath) => removeWatch(tpPath, fun))
     $removeWatch && $removeWatch()
   }
   // 恢复监听
   const $addWatch = element.$addWatch
   element.$addWatch = () => {
-    forEach(watchFuns, (fun, path) => addWatch(path, fun))
+    forEach(watchFuns, (fun, tpPath) => addWatch(tpPath, fun))
     $addWatch && $addWatch()
   }
   // 移除过滤器
@@ -104,18 +112,19 @@ const handlerWatch = (element, key, template, tpData) => {
  * 设置元素属性，如有模板会监听模板
  * @private
  * @function
- * @param {Object} element  - 元素
- * @param {String} key      - 元素的属性
- * @param {Any}    value    - 属性值或模板
+ * @param {Object}   element  - 元素
+ * @param {String}   path     - 元素的属性或路径
+ * @param {Any}      value    - 属性值或模板
+ * @param {Function} callBack - 回调值和路径，callBack(newVal, path)
  */
-export const update = (element, key, value) => {
+export const update = (element, path, value, callBack) => {
   if (isObject(value) || isArray(value)) {
-    // 不能用element[key]，其可能是空或不是对象，所以组装路径
-    forEach(value, (val, k) => update(element, pathJoin(key, k), val))
+    // 不能用element[path]，其可能是空或不是对象，所以组装路径
+    forEach(value, (val, k) => update(element, pathJoin(path, k), val, callBack))
     return
   }
-  // 设置element属性
-  set(element, key, value)
+  // 回调路径和值
+  callBack(value, path)
 
   // 模板数据，tpData = { val: 匹配模板最新值, tp: { [路径|id]: { RE: 匹配模板正则, filterId: 过滤器id }}};
   const tpData = {}
@@ -128,13 +137,13 @@ export const update = (element, key, value) => {
       // 路径|id
       const key = tp[1]
       // 路径
-      const path = tp[2]
-      if (!tpData[path]) {
-        tpData[path] = { val: '', tp: {} }
+      const tpPath = tp[2]
+      if (!tpData[tpPath]) {
+        tpData[tpPath] = { val: '', tp: {} }
       }
-      if (!tpData[path].tp[key]) {
+      if (!tpData[tpPath].tp[key]) {
         // 模板转正则
-        tpData[path].tp[key] = {
+        tpData[tpPath].tp[key] = {
           RE: RegExp(tp[0].replace('|', '\\|'), 'g'),
           filterId: tp[3]
         }
@@ -143,5 +152,5 @@ export const update = (element, key, value) => {
   } while (tp !== null)
 
   // 处理监听
-  !isEmpty(tpData) &&  handlerWatch(element, key, value, tpData)
+  !isEmpty(tpData) &&  handlerWatch(element, path, value, tpData, callBack)
 }

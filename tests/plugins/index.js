@@ -3,14 +3,14 @@ export const addPluginsText = ({ plugins, createElement }) => {
 
   it('测试添加插件', () => {
     const plugin = {
-      property: 'test1',
+      property: 'path',
       handler: (element, value) => {
         expect(value).toBe(data)
         expect(element.outerHTML).toBe('<div></div>')
       }
     }
     plugins([plugin])
-    createElement({ test1: data })
+    createElement({ path: data })
   })
 
   it('测试配置插件', () => {
