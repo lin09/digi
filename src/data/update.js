@@ -43,7 +43,7 @@ const updated = (template, tpData, callBack) => {
       // 正则替换
       newVal = newVal.replace(tp.RE, valStr)
 
-      if (newVal === valStr) {
+      if (newVal === valStr + '') {
         newVal = val
       }
     })
