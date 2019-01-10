@@ -66,16 +66,6 @@ export const createElement = data => {
     return
   }
 
-  // // 路由插件，固定分配属性名'path'给路由插件
-  // if (data.hasOwnProperty('path') && plugins.hasRouter) {
-  //   return
-  // }
-
-  // // 有路由插件时将有'to'属性元素转成a标签元素
-  // if (data.hasOwnProperty('to') && plugins.hasRouter) {
-  //   data.tagName = 'a'
-  // }
-
   // 创建element，无tagName时默认为'div'
   const element = document.createElement(data.tagName || 'div')
   data = cloneDeep(data)

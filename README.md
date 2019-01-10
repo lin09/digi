@@ -28,10 +28,10 @@ const data = createData({ a: 123 })
 // 添加元素
 digi({ text: data.$tp('a') })
 
-console.log(document.body.outerHTML)
-// => <body><div>123</div></body>
+console.log(document.body.lastElementChild.outerHTML)
+// => <div>123</div>
 
 data.a = 321
-console.log(document.body.outerHTML)
-// => <body><div>321</div></body>
+console.log(document.body.lastElementChild.outerHTML)
+// => <div>321</div>
 ```
