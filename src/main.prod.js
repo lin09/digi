@@ -57,7 +57,7 @@ document.body.$isUpdate = true
 const appendChild = document.appendChild
 document.body.__proto__.__proto__.appendChild = function (child) {
   appendChild.call(this, child)
-  child.$update && child.$update()
+  child.$isUpdate = true
 }
 
 export default digi

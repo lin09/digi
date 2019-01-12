@@ -31,7 +31,11 @@ export const createElementTest = ({ createElement, createData }) => {
       data.a = 'tttttt'
       expect(data.a).toBe('tttttt')
       expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
+      expect(e.$isUpdate).toBe(true)
       e.remove()
+      expect(e.$isUpdate).toBe(false)
+      e.remove()
+      expect(e.$isUpdate).toBe(false)
     })
   })
 }

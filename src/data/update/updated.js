@@ -32,12 +32,14 @@ export const updated = (template, tpData, callBack) => {
       } else if (isUndefined(valStr) || isNull(valStr)) {
         // undefined 和 Null 转成空字符串
         valStr = ''
+      } else if (Object.is(valStr, NaN)) {
+        valStr = 0
       }
 
       // 正则替换
       newVal = newVal.replace(tp.RE, valStr)
 
-      if (newVal === valStr + '') {
+      if (valStr !== '' && newVal === valStr + '') {
         newVal = val
       }
     })

@@ -1,6 +1,5 @@
 import { update } from '../data'
-import { handlerRemove } from './handlerRemove'
-import { handlerRestore } from './handlerRestore'
+import { defineIsUpdate } from './defineIsUpdate'
 
 /**
  * 创建文本节点
@@ -30,17 +29,7 @@ import { handlerRestore } from './handlerRestore'
 export const createTextNode = text => {
   const textNode = document.createTextNode(text)
   update(textNode, 'nodeValue', text, newValue => textNode.nodeValue = newValue)
-
-
-  // 移除文本节点
-  const remove = textNode.remove
-  textNode.remove = () => {
-    remove.call(textNode)
-    handlerRemove(textNode)
-  }
-
-  // 恢复文本节点
-  textNode.$update = () => handlerRestore(textNode)
+  defineIsUpdate(textNode)
 
   return textNode
 }
