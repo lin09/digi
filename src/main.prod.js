@@ -47,9 +47,12 @@ Object.defineProperties(digi, {
   el: { value: document.getElementById('digi') || document.body },
   createElement: { value: createElement },
   createTextNode: { value: createTextNode },
-  utils: { value: utils },
+  utils: { value: {} },
   createData: { value: createData },
   plugins: { value: addPlugins }
+})
+utils.forEach(utils, (value, key) => {
+  Object.defineProperty(digi.utils, key, { value, enumerable: true })
 })
 
 digi.el.$isUpdate = true
