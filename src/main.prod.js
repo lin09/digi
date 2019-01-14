@@ -2,6 +2,7 @@ import * as utils from './utils'
 import { createElement, createTextNode } from './dom'
 import { createData  } from './data'
 import { addPlugins } from './plugin'
+import { observe } from './observe'
 
 /**
  * 把data转成元素添加为element的子元素
@@ -54,10 +55,7 @@ Object.defineProperties(digi, {
 digi.el.$isUpdate = true
 document.body.$isUpdate = true
 
-const appendChild = document.appendChild
-document.body.__proto__.__proto__.appendChild = function (child) {
-  appendChild.call(this, child)
-  child.$isUpdate = true
-}
+// 监听document.body.childNode变化
+observe()
 
 export default digi

@@ -34,6 +34,7 @@
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
     "jsonfile": "^5.0.0",
+    "mutationobserver-shim": "^0.3.2",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-eslint": "^5.0.0",

@@ -15,10 +15,12 @@ export const filtersText = ({ createData, createElement }) => {
 
       let html = `<div>${data.a * 2 + 2}</div>`
       document.body.appendChild(e)
+      jest.advanceTimersByTime(1000)
       // 添加到页面后自动渲染
       expect(e.outerHTML).toBe(html)
 
       e.remove()
+      jest.advanceTimersByTime(1000)
       // 如果多次触发移除过滤器，不会影响结果。正常情况不触发多次
       e.$removeFilter()
       // 如果多次触发移除监听，不会影响结果。正常情况不触发多次
@@ -28,6 +30,7 @@ export const filtersText = ({ createData, createElement }) => {
       expect(e.outerHTML).toBe(html)
 
       document.body.appendChild(e)
+      jest.advanceTimersByTime(1000)
       html = `<div>${data.a * 2 + 2}</div>`
       // 重新添加回页面后自动更新
       expect(e.outerHTML).toBe(html)

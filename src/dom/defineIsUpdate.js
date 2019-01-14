@@ -22,11 +22,4 @@ export const defineIsUpdate = element => {
       }
     }
   })
-
-  // 移除元素
-  const remove = element.remove
-  element.remove = () => {
-    element.$isUpdate = false
-    remove.call(element)
-  }
 }

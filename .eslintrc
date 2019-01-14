@@ -6,7 +6,8 @@
   "globals": {
     "document": true,
     "window": true,
-    "Proxy": true
+    "Proxy": true,
+    "MutationObserver": true
   },
   "extends": "eslint:recommended",
   "rules": {

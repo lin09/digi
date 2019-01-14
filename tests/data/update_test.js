@@ -12,7 +12,9 @@ export const updateTest = ({ createElement, createData }) => {
     })
 
     document.body.appendChild(e)
+    jest.advanceTimersByTime(1000)
     e.remove()
+    jest.advanceTimersByTime(1000)
     expect(e.outerHTML).toBe('<div data-a="a">a{"c":123}0</div>')
   })
 }
