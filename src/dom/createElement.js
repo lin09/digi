@@ -3,8 +3,7 @@ import { plugins } from '../plugin'
 import { update } from '../data'
 import { updateValue } from './updateValue'
 import { createTextNode } from './createTextNode'
-import { handlerRemove } from './handlerRemove'
-import { handlerRestore } from './handlerRestore'
+import { defineIsUpdate } from './defineIsUpdate'
 
 // 匹配为文本节点的属性名
 const textKeyRE = /^text[0-9]*$/
@@ -101,15 +100,7 @@ export const createElement = data => {
     }
   })
 
-  // 移除元素
-  const remove = element.remove
-  element.remove = () => {
-    handlerRemove(element)
-    remove.call(element)
-  }
-
-  // 恢复元素
-  element.$update = () => handlerRestore(element)
+  defineIsUpdate(element)
 
   return element
 }

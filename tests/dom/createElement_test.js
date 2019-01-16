@@ -25,13 +25,23 @@ export const createElementTest = ({ createElement, createData }) => {
       const textPart2 = 'testbbbb'
       const e = createElement({ textContent: textPart1 + data.$tp('a') + textPart2 + data.$tp('a') + textPart1 })
       document.body.appendChild(e)
+      jest.advanceTimersByTime(1000)
 
       expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
 
       data.a = 'tttttt'
       expect(data.a).toBe('tttttt')
       expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
+
+      expect(e.$isUpdate).toBe(true)
+
       e.remove()
+      jest.advanceTimersByTime(1000)
+      expect(e.$isUpdate).toBe(false)
+
+      e.$isUpdate = true
+      expect(e.$isUpdate).toBe(false)
+      e.$isUpdate = false
     })
   })
 }

@@ -1,82 +1,65 @@
-import { forEach, cloneDeep, isArray, isObject, pathJoin } from '../utils'
+import { forEach, isArray, isObject, pathJoin } from '../utils'
 import { addWatch, triggerWatch } from './watchs'
 import { createTemplates } from './template'
 
 /**
- * 设置对象defineProperty
+ * 设置Proxy
  * @private
- * @param {Object|Array}  newData   - 对象，是{@link createData}的返回可监听对象
- * @param {String|Number} key       - 对象属性名
- * @param {Object|Array}  data      - 源数据
- * @param {Object|Array}  state     - 存储最新数据
- * @param {String}        watchPath - 所有父属性名连接
+ * @param   {Object|Array}  target - 对象类型值，target = {} || []
+ * @param   {Object|Array}  path   - 对象路径，用于组装监听路径和触发监听
+ * @returns {Proxy}                - 返回代理对象
  */
-const setProperty = (newData, key, data, state, watchPath) => {
-  watchPath = pathJoin(watchPath, key)
-  addWatch(watchPath)
-
-  Object.defineProperty(newData, key, {
-    // 可改变，可删除属性
-    configurable: true,
-    // 可枚举
-    enumerable: true,
-    // 读取属性的值
-    get: () => state[key],
-    // 赋值调用方法
-    set: newVal => {
-      let oldVal = state[key]
+const setProxy = (target, path) => {
+  const handler = {
+    get: (target, prop) => target[prop],
+    set: (target, prop, newVal) => {
+      let oldVal = target[prop]
 
       // 无数据变更
       if (JSON.stringify(newVal) === JSON.stringify(oldVal)) {
-        return
+        return true
       }
+
+      const watchPath = pathJoin(path, prop)
 
       // 触发watch
       triggerWatch(watchPath, newVal, oldVal)
 
       // 对象处理
       if (isObject(newVal)) {
-        state[key] = {}
         if (!isObject(oldVal)) {
-          oldVal = {}
+          target[prop] = setProxy({}, watchPath)
         }
-        const newState = {}
-        // 组装新属性，保留oldVal对应newVal的key值
-        forEach(newVal, (val, k) => newState[k] = oldVal[k] )
-        // 设置新属性
-        forEach(newVal, (val, k) => setProperty(newData[key], k, newVal, newState, watchPath))
+        forEach(newVal, (val, k) => target[prop][k] = val)
       }
 
       // 数组处理
       else if (isArray(newVal)) {
-        state[key] = []
         if (!isArray(oldVal)) {
-          oldVal = []
+          target[prop] = setProxy([], watchPath)
         }
-        const newState = []
-        forEach(newVal, (val, k) => newState[k] = oldVal[k])
-        forEach(newVal, (val, k) => setProperty(newData[key], k, newVal, newState, watchPath))
+        forEach(newVal, (val, k) => target[prop][k] = val)
       }
 
       // 其它类型
       else {
-        state[key] = newVal
+        target[prop] = newVal
       }
-    }
-  })
 
-  // 赋值
-  newData[key] = cloneDeep(data[key])
+      return true
+    }
+  }
+  return new Proxy(target, handler)
 }
 
 /**
  * 创建可监听对象
  * @function
- * @param {Object} data  - 源对象
- * @param {Object} watch - watch = { path1: fun1, ..., pathN: funN };<br>
- *                         path = 源对象路径; <br>
- *                         fun = (newVal, [oldVal]) => {};
- * @returns {Object}     - 返回可监听对象
+ * @param   {Object} data  - 源对象
+ * @param   {Object} watch - watch = { path1: fun1, ..., pathN: funN };<br>
+ *                           path = 源对象路径; <br>
+ *                           fun = (newVal, [oldVal]) => {};
+ * @returns {Object}       - 返回可监听对象
  * @example
  * import digi, { createData } from 'digi'
  * import refs, { allotId } from 'digi-refs'
@@ -110,9 +93,8 @@ export const createData = (data, { watch } = {}) => {
   const id = ++ createData.id
 
   // 可监听对象
-  const newData = {}
-  // 设置属性
-  forEach(data, (value, key) => setProperty(newData, key, data, {}, id))
+  const newData = setProxy({}, id)
+  forEach(data, (value, key) => newData[key] = value)
 
   // 添加监听
   forEach(watch, (handler, path) => addWatch(pathJoin(id, path), handler, false))

@@ -52,6 +52,7 @@ export const removeWatch = (path, handler) => {
  * @param {Any}    oldVal - 旧值
  */
 export const triggerWatch = (path, newVal, oldVal) => {
+  !watchs[path] && addWatch(path)
   newVal = cloneDeep(newVal)
   oldVal = cloneDeep(oldVal)
   watchs[path].newVal = newVal
