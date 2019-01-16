@@ -24,12 +24,14 @@ export const addFilter = args => {
 
 /**
  * 累计id
+ * @private
  * @property {Number} addFilter.id 最后一个id值
  */
 Object.defineProperty(addFilter, 'id', { value: 0, writable: true })
 
 /**
  * 获取过滤器
+ * @private
  * @param {Number} id - {@link addFilter}返回的id
  * @returns {Array}   - 返回[[filter, arg1, ..., argN], ... ]
  */
