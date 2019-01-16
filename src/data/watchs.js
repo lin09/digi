@@ -1,4 +1,4 @@
-import { forEach, cloneDeep } from '../utils'
+import { forEach, cloneDeep, isTofObject, pathJoin } from '../utils'
 
 /**
  * 存储变化数据和调用方法
@@ -57,6 +57,13 @@ export const triggerWatch = (path, newVal, oldVal) => {
   oldVal = cloneDeep(oldVal)
   watchs[path].newVal = newVal
   watchs[path].oldVal = oldVal
+
+  // 对象类型不同
+  if (isTofObject(oldVal) && toString.call(newVal) !== toString.call(oldVal)) {
+    forEach(oldVal, (val, k) => triggerWatch(pathJoin(path, k), undefined, val))
+  }
+
   // 调用监听
   forEach(watchs[path], handler => handler(newVal, oldVal))
+
 }
