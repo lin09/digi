@@ -10,7 +10,7 @@ import { set, isTofObject } from '../utils'
  * @param {Any}    newVal - 路径对应的更新值
  */
 export const updateValue = (value, key, path, newVal) => {
-  if (isTofObject(value)) {
+  if (isTofObject(value) && key !== path) {
     set(value, path.replace(key + '.', ''), newVal)
     return value
   } else {
