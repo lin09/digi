@@ -1,6 +1,6 @@
 export const createDataTest = createData => {
   describe(`测试${ createData.name }`, () => {
-    const sourceData = { a: 123, b: { c: 'abc' }, c: ['a'] }
+    const sourceData = { a: 123, b: { d: 'abc' }, d: ['a'] }
     const data = createData(sourceData)
 
     it('创建数据', () => {
@@ -11,6 +11,12 @@ export const createDataTest = createData => {
     it('改变数据', () => {
       data.a = 666
       expect(data.a).toBe(666)
+
+      data.b = {}
+      expect(data.b.d).toBe(undefined)
+
+      data.d = []
+      expect(data.d[0]).toBe(undefined)
     })
 
     it('获取模板', () => {
