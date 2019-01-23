@@ -89,10 +89,12 @@ export const createElement = data => {
     }
     else {
       update(element, key, value, (newVal, path) => {
+        value = updateValue(value, key, path, newVal)
         if (plugins.hasOwnProperty(key)) {
           // 调用插件
-          value = updateValue(value, key, path, newVal)
           plugins[key](element, value, path, newVal)
+        } else if (element[key] === undefined) {
+          element.setAttribute(key, value)
         } else {
           set(element, path, newVal)
         }
