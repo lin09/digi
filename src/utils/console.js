@@ -6,6 +6,6 @@ export const successLog = (...msgs) => {
   for (const index in msgs) {
     format[index] = '%s'
   }
-  format = success.replace('%s', format.join(', '))
+  format = success.replace('%s', format.join(' '))
   console.log(format, ...msgs)
 }

@@ -68,3 +68,4 @@ docs/
 
 # dist
 dist/
+yarn.lock

@@ -4,21 +4,21 @@ export const digiTest = digi => {
   describe('测试digi方法', () => {
     it('dom数据为字符串', () => {
       digi('a')
-      expect(document.body.outerHTML).toBe('<body><a></a></body>')
+      expect(document.body.childNodes[0].localName).toBe('a')
     })
     it('dom数据为对象', () => {
       digi({ tagName: 'p' })
-      expect(document.body.outerHTML).toBe('<body><p></p></body>')
+      expect(document.body.childNodes[0].localName).toBe('p')
     })
     it('dom数据为数组', () => {
       digi(['h1'])
-      expect(document.body.outerHTML).toBe('<body><h1></h1></body>')
+      expect(document.body.childNodes[0].localName).toBe('h1')
     })
     it('插入到目标元素', () => {
       const p = digi.createElement('p')
-      expect(p.outerHTML).toBe('<p></p>')
+      expect(p.localName).toBe('p')
       digi('a', p)
-      expect(p.outerHTML).toBe('<p><a></a></p>')
+      expect(p.childNodes[0].localName).toBe('a')
     })
   })
 }

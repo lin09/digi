@@ -9,6 +9,7 @@
 ## 一个简单的 js 框架
 
 #### 插件
+- [doc](https://digi1874.github.io/digi-doc/1.0.9/index.html)
 - [router](https://github.com/digi1874/digi-router)
 - [classname](https://github.com/digi1874/digi-classname)
 - [refs](https://github.com/digi1874/digi-refs)
@@ -28,13 +29,13 @@ yarn add -D digi
 import digi, { createData } from 'digi'
 
 // 创建监听数据
-const data = createData({ a: 123 })
+const data = createData()
 
 // 添加元素
 digi({ text: data.$tp('a') })
 
 console.log(document.body.lastElementChild.outerHTML)
-// => <div>123</div>
+// => <div></div>
 
 data.a = 321
 console.log(document.body.lastElementChild.outerHTML)

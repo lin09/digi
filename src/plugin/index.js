@@ -1,4 +1,5 @@
 import { isArray, forEach, isObject } from '../utils'
+import { version } from '../../package.json'
 
 /**
  * 存储插件handlerFun
@@ -20,7 +21,7 @@ const addPlugin = (plugin, options) => {
     addPlugin(plugin[0], plugin[1])
   } else if (!isObject(plugin)) {
     window.console.error('plugins Error: ', plugin)
-    window.console.log('View document: https://digi1874.github.io/digi-doc/1.0.1/global.html#plugins')
+    window.console.log(`View document: https://digi1874.github.io/digi-doc/${ version }/global.html#plugins`)
   } else {
     // 存储插件handlerFun
     plugins[plugin.property] = plugin.handler

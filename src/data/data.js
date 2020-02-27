@@ -30,6 +30,14 @@ const setProxy = (target, path) => {
         if (!isObject(oldVal)) {
           target[prop] = setProxy({}, watchPath)
         }
+
+        forEach(target[prop], (val, k) => {
+          if (!Object.prototype.hasOwnProperty.call(newVal, k)) {
+            target[prop][k] = undefined
+            delete target[prop][k]
+          }
+        })
+
         forEach(newVal, (val, k) => target[prop][k] = val)
       }
 
@@ -38,6 +46,12 @@ const setProxy = (target, path) => {
         if (!isArray(oldVal)) {
           target[prop] = setProxy([], watchPath)
         }
+
+        for(let i = newVal.length; i < target[prop].length; i ++) {
+          target[prop][i] = undefined
+          delete target[prop][i]
+        }
+
         forEach(newVal, (val, k) => target[prop][k] = val)
       }
 

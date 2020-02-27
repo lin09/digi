@@ -1,6 +1,6 @@
 import { addWatch, removeWatch } from '../../src/data'
 
-const sourceData = { a: 123, b: { c: 'abc' }, c: ['a'] }
+const sourceData = { a: 123, b: { c: 'abc' }, c: ['a'], un: { u: '123' } }
 
 export const addWatchTest = createData => {
   describe('添加watch', () => {
@@ -18,12 +18,19 @@ export const addWatchTest = createData => {
             expect(oldVal).toBe(oldDataA)
             expect(newVal).toBe(newDataA)
           })
+        },
+        'un.u': (newVal, oldVal) => {
+          it('createData 的 watch', () => {
+            expect(oldVal).toBe('123')
+            expect(newVal).toBe(undefined)
+          })
         }
       }
     })
     data.a = newDataA
     data.b = newDataB
     data.c = newDataC
+    data.un = undefined
     // 值不变不触发watch
     data.a = newDataA
     data.b = newDataB
