@@ -4,6 +4,7 @@ import { update } from '../data'
 import { updateValue } from './updateValue'
 import { createTextNode } from './createTextNode'
 import { defineIsUpdate } from './defineIsUpdate'
+import { version } from '../../package.json'
 
 // 匹配为文本节点的属性名
 const textKeyRE = /^text[0-9]*$/
@@ -61,7 +62,7 @@ export const createElement = data => {
 
   if (!isObject(data)) {
     window.console.error('createElement Error: ', data)
-    window.console.log('View document: https://digi1874.github.io/digi-doc/1.0.1/global.html#digi')
+    window.console.log(`View document: https://digi1874.github.io/digi-doc/${ version }/global.html#digi`)
     return
   }
 

@@ -28,13 +28,13 @@ yarn add -D digi
 import digi, { createData } from 'digi'
 
 // 创建监听数据
-const data = createData({ a: 123 })
+const data = createData()
 
 // 添加元素
 digi({ text: data.$tp('a') })
 
 console.log(document.body.lastElementChild.outerHTML)
-// => <div>123</div>
+// => <div></div>
 
 data.a = 321
 console.log(document.body.lastElementChild.outerHTML)
