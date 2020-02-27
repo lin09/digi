@@ -23,8 +23,8 @@ export const rollupConfig = {
   plugins: [
     // babel 必需优先
     babel(),
-    eslint(),
     json(),
+    eslint(),
     resolve(),
     commonjs()
   ]
