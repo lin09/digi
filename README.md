@@ -9,6 +9,7 @@
 ## 一个简单的 js 框架
 
 #### 插件
+- [doc](https://digi1874.github.io/digi-doc/1.0.9/index.html)
 - [router](https://github.com/digi1874/digi-router)
 - [classname](https://github.com/digi1874/digi-classname)
 - [refs](https://github.com/digi1874/digi-refs)
