@@ -90,7 +90,7 @@ export const createElement = data => {
     else {
       update(element, key, value, (newVal, path) => {
         value = updateValue(value, key, path, newVal)
-        if (plugins.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(plugins, key)) {
           // 调用插件
           plugins[key](element, value, path, newVal)
         } else if (element[key] === undefined) {

@@ -12,5 +12,10 @@
   ],
   "plugins": [
     ["@babel/plugin-proposal-object-rest-spread", { "loose": true, "useBuiltIns": true }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": ["@babel/plugin-transform-runtime"]
+    }
+  }
 }

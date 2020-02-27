@@ -32,7 +32,7 @@ const setProxy = (target, path) => {
         }
 
         forEach(target[prop], (val, k) => {
-          if (!newVal.hasOwnProperty(k)) {
+          if (!Object.prototype.hasOwnProperty.call(newVal, k)) {
             target[prop][k] = undefined
             delete target[prop][k]
           }

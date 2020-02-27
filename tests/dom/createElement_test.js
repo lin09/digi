@@ -4,6 +4,7 @@ export const createElementTest = ({ createElement, createData }) => {
       expect(createElement().localName).toBe('div')
       expect(createElement({}).localName).toBe('div')
       expect(createElement({ tagName: 'test' }).localName).toBe('test')
+      expect(createElement({ abc: '123' }).outerHTML).toBe('<div abc="123"></div>')
     })
     it('测试错误数据创建DOM报错', () => {
       expect(createElement(['测试错误数据创建DOM报错'])).toBe(undefined)
@@ -19,13 +20,12 @@ export const createElementTest = ({ createElement, createData }) => {
       // 属性名：text + 数字
       expect(createElement({ ['text' + Math.floor(Math.random() * 100)]: 'text' }).innerHTML).toBe('text')
     })
-    it('测试DOM绑定数据', () => {
+    it('测试DOM绑定数据', async () => {
       const data = createData({ a: 'test' })
       const textPart1 = 'testaaaa'
       const textPart2 = 'testbbbb'
       const e = createElement({ textContent: textPart1 + data.$tp('a') + textPart2 + data.$tp('a') + textPart1 })
-      document.body.appendChild(e)
-      jest.advanceTimersByTime(1000)
+      await document.body.appendChild(e)
 
       expect(e.textContent).toBe(textPart1 + data.a + textPart2 + data.a + textPart1)
 
@@ -35,8 +35,7 @@ export const createElementTest = ({ createElement, createData }) => {
 
       expect(e.$isUpdate).toBe(true)
 
-      e.remove()
-      jest.advanceTimersByTime(1000)
+      await e.remove()
       expect(e.$isUpdate).toBe(false)
 
       e.$isUpdate = true

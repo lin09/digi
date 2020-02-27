@@ -9,6 +9,8 @@ export const forEachTest = (forEach) => {
       expect(value).not.toBe(obj.__proto__.c)
     })
 
+    delete obj.__proto__.c
+
     forEach(obj, (value, key) => {
       expect(value).toBe(obj.a)
       expect(key).toBe('a')

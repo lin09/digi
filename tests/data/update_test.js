@@ -1,6 +1,6 @@
 export const updateTest = ({ createElement, createData }) => {
   // 在其他地方测试过的功能不再测试，下面只是完善测试覆盖率
-  describe('测试update', () => {
+  it('测试update', async () => {
     const data = createData({ a: 'a', b: { c: 123 }, u: undefined, n: NaN })
     const e = createElement({
       // 元素属性为对象测试
@@ -11,10 +11,8 @@ export const updateTest = ({ createElement, createData }) => {
       textContent: data.$tp('a') + data.$tp('b') + data.$tp('u') + data.$tp('n'),
     })
 
-    document.body.appendChild(e)
-    jest.advanceTimersByTime(1000)
-    e.remove()
-    jest.advanceTimersByTime(1000)
+    await document.body.appendChild(e)
+    await e.remove()
     expect(e.outerHTML).toBe('<div data-a="a">a{"c":123}0</div>')
   })
 }
