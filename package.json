@@ -1,6 +1,6 @@
 {
   "name": "digi",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "一个简单的js框架",
   "main": "main.js",
   "scripts": {

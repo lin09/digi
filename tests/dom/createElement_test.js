@@ -5,6 +5,7 @@ export const createElementTest = ({ createElement, createData }) => {
       expect(createElement({}).localName).toBe('div')
       expect(createElement({ tagName: 'test' }).localName).toBe('test')
       expect(createElement({ abc: '123' }).outerHTML).toBe('<div abc="123"></div>')
+      expect(createElement({ tagName: 'svg', child: { tagName: 'a' } }).localName).toBe('svg')
     })
     it('测试错误数据创建DOM报错', () => {
       expect(createElement(['测试错误数据创建DOM报错'])).toBe(undefined)

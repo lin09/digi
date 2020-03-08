@@ -7,7 +7,7 @@ import { defineIsUpdate } from './defineIsUpdate'
 import { version } from '../../package.json'
 
 // 匹配为文本节点的属性名
-const textKeyRE = /^text[0-9]*$/
+const textKeyRE = /^text(Content)*[0-9]*$/
 // 匹配为子元素的属性名
 const childKeyRE = /^child[0-9]*$/
 
@@ -19,6 +19,8 @@ const childKeyRE = /^child[0-9]*$/
  *                                         child = data 或 [data1, ..., dataN]; <br>
  *                                         子元素的属性名为 'child' 或 'child' + 数字 { child: 子元素, child0: 子元素, child1: 子元素, ... }; <br>
  *                                         文本节点的属性名为 'text' 或 'text' + 数字 { text: '内容', text0: '内容', text1: '内容', ... }; <br>
+ *                                         注意：值为字符串会调用setAttribute
+ * @param {String|Undefined}        ptn  - 父元素的tagName，父元素的tagName为svg时必需传
  * @returns {Object}                     - 返回元素
  * @example
  * import { createElement } from 'digi'
@@ -55,7 +57,7 @@ const childKeyRE = /^child[0-9]*$/
  * console.log(el.outerHTML)
  * // => '<div>123aa</div>'
  */
-export const createElement = data => {
+export const createElement = (data, ptn) => {
   if (isString(data) || isUndefined(data)) {
     data = { tagName: data }
   }
@@ -67,7 +69,10 @@ export const createElement = data => {
   }
 
   // 创建element，无tagName时默认为'div'
-  const element = document.createElement(data.tagName || 'div')
+  ptn = ptn === 'svg' ? 'svg' : data.tagName === 'svg' ? 'svg' : ''
+  const element = ptn === 'svg' ?
+    document.createElementNS('http://www.w3.org/2000/svg', data.tagName) :
+    document.createElement(data.tagName || 'div')
   data = cloneDeep(data)
   delete data.tagName
 
@@ -76,11 +81,11 @@ export const createElement = data => {
       // 子元素
       if (isArray(value)) {
         forEach(value, val => {
-          const el = createElement(val)
+          const el = createElement(val, ptn)
           el && element.appendChild(el)
         })
       } else {
-        const el = createElement(value)
+        const el = createElement(value, ptn)
         el && element.appendChild(el)
       }
     } else if (textKeyRE.test(key)) {
@@ -94,7 +99,7 @@ export const createElement = data => {
         if (Object.prototype.hasOwnProperty.call(plugins, key)) {
           // 调用插件
           plugins[key](element, value, path, newVal)
-        } else if (element[key] === undefined) {
+        } else if (isString(value)) {
           element.setAttribute(key, value)
         } else {
           set(element, path, newVal)
