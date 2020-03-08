@@ -4,6 +4,9 @@
 import fs from 'fs'
 import path from 'path'
 import jsonfile from 'jsonfile'
+import filesize from 'rollup-plugin-filesize'
+import { uglify } from "rollup-plugin-uglify"
+import { minify } from 'uglify-es'
 import { pick } from './src/utils/pick'
 import { successLog } from './src/utils/console'
 import { rollupConfig, DICT } from './config/rollup.config'
@@ -36,11 +39,36 @@ jsonfile.readFile(packageFile)
   .catch(err => { throw err })
 
 // rollup config
-export default {
+export default [{
   ...rollupConfig,
   output: {
     ...rollupConfig.output,
     file: path.join(DICT.NPM_DIR, DICT.INPUT_FILENAME),
     exports: 'named'
   }
-}
+}, {
+  ...rollupConfig,
+  input: path.join('src', 'main.prod.js'),
+  output: {
+    ...rollupConfig.output,
+    file: path.join(DICT.NPM_DIR, 'digi.min.js'),
+    format: 'umd'
+  },
+  plugins: [
+    ...rollupConfig.plugins,
+    uglify({}, minify),
+    filesize()
+  ]
+}, {
+  ...rollupConfig,
+  input: path.join('src', 'main.prod.js'),
+  output: {
+    ...rollupConfig.output,
+    file: path.join(DICT.NPM_DIR, 'digi.js'),
+    format: 'umd'
+  },
+  plugins: [
+    ...rollupConfig.plugins,
+    filesize()
+  ]
+}]
