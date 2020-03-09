@@ -19,7 +19,7 @@ const childKeyRE = /^child[0-9]*$/
  *                                         child = data 或 [data1, ..., dataN]; <br>
  *                                         子元素的属性名为 'child' 或 'child' + 数字 { child: 子元素, child0: 子元素, child1: 子元素, ... }; <br>
  *                                         文本节点的属性名为 'text' 或 'text' + 数字 { text: '内容', text0: '内容', text1: '内容', ... }; <br>
- *                                         注意：值为字符串会调用setAttribute
+ *                                         注意：值为字符串会调用setAttribute，例外['value', 'className'].indexOf(key) === -1，例外后继会添加
  * @param {String|Undefined}        ptn  - 父元素的tagName，父元素的tagName为svg时必需传
  * @returns {Object}                     - 返回元素
  * @example
@@ -99,7 +99,7 @@ export const createElement = (data, ptn) => {
         if (Object.prototype.hasOwnProperty.call(plugins, key)) {
           // 调用插件
           plugins[key](element, value, path, newVal)
-        } else if (isString(value)) {
+        } else if (['value', 'className'].indexOf(key) === -1 && isString(value)) {
           element.setAttribute(key, value)
         } else {
           set(element, path, newVal)
