@@ -22,7 +22,7 @@ yarn add -D digi
 
 ----
 #### 实例
-- [demo](https://github.com/lin09/digi-demo)
+- [demo](https://github.com/lin09/demo/tree/master/digi)
 
 #### 简单例子
 ```
